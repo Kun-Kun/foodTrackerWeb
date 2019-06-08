@@ -1,4 +1,4 @@
-package servlets;
+package ua.epam.food.dao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

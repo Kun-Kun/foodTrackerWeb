@@ -1,4 +1,6 @@
-package servlets;
+package ua.epam.food.controller;
+
+import ua.epam.food.core.db.QueryExecutor;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,26 +29,8 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DataSource ds = null;
-        try {
-            InitialContext initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            ds = (DataSource) envContext.lookup("jdbc/foodTrackerWeb");
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-
-        try(Connection conn = ds.getConnection()) {
-            Statement statement = conn.createStatement();
-
-            String sql;
-            sql = "SELECT * FROM developers";
-
-            ResultSet resultSet = statement.executeQuery(sql);
-            System.out.println(DeveloperJdbcDemo.resultSetToList(resultSet));
-        }catch (SQLException ssql){
-            System.out.println(ssql);
-        }
+        QueryExecutor executor = new QueryExecutor();
+        System.out.println(executor.findAll("SELECT * FROM developers WHERE salary is ? ;", 2000));
         response.setContentType("text/html");
 
         String varTextA = "Hello World!";
