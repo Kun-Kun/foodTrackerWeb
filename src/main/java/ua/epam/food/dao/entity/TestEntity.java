@@ -1,12 +1,9 @@
-package ua.epam.food.dao;
+package ua.epam.food.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.Data;
 
-@Entity
+@Data
 public class TestEntity {
-
     private Integer id;
     private String name;
     private String specialty;
