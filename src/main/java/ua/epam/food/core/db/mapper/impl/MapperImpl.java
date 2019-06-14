@@ -2,6 +2,7 @@ package ua.epam.food.core.db.mapper.impl;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import ua.epam.food.core.db.mapper.Mapper;
 
 import java.util.Collection;
@@ -9,6 +10,9 @@ import java.util.Collection;
 public class MapperImpl implements Mapper {
 
     private ObjectMapper mapper = new ObjectMapper();
+    {
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+    }
 
     @Override
     public <T> T convertValue(Object fromValue, Class<T> toValueType) {

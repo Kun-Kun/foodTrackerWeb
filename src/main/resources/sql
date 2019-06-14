@@ -1,0 +1,74 @@
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+INSERT INTO `tracker`.`user`
+(`id`,
+`username`,
+`password`,
+`enabled`)
+VALUES
+(1,
+'admin',
+'fCIvspJ9goryL1khNOiTJIBjfA0=',
+true);
+CREATE TABLE `user_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `role_privilege` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
+  `privilege_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `privilege` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `profile` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(50),
+  `last_name` varchar(50),
+  `email` varchar(50) NOT NULL,
+  `goal` int(11) default 0,
+  `height` int(11),
+  `weight` float,
+  `birthday` DATE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+INSERT INTO `tracker`.`profile`
+(`id`,
+`user_id`,
+`first_name`,
+`last_name`,
+`email`,
+`goal`,
+`height`,
+`weight`,
+`birthday`)
+VALUES
+(1,
+1,
+'Maxim',
+'',
+'mmazurenko@vodafone.ua',
+0,
+null,
+null,
+"1993-05-30");
+INSERT INTO `tracker`.`role` (`id`, `name`) VALUES ('1', 'GUEST_ROLE');

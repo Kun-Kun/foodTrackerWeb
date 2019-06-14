@@ -1,23 +1,25 @@
 package ua.epam.food.core.security.context;
 
+import ua.epam.food.core.security.data.UserDetail;
+
 public class SecurityContextHolder {
     private static SecurityContextHolder instance;
 
     private SecurityContextHolder() {}
 
-    public synchronized SecurityContextHolder getInstance(){
+    public static synchronized SecurityContextHolder getInstance(){
         if (instance==null){
             instance = new SecurityContextHolder();
         }
         return instance;
     }
-    private ThreadLocal<SecurityData> data = new ThreadLocal<SecurityData>();
+    private ThreadLocal<UserDetail> data = new ThreadLocal<UserDetail>();
 
-    public SecurityData getSecurityData() {
+    public UserDetail getSecurityData() {
         return data.get();
     }
 
-    public void setSecurityData(SecurityData userID) {
-        this.data.set(userID);
+    public void setSecurityData(UserDetail user) {
+        this.data.set(user);
     }
 }
