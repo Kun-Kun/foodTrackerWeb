@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import ua.epam.food.FilterBilder;
 
 @WebFilter("/RequestLoggingFilter")
 public class AuthFilter implements Filter {
@@ -17,7 +18,7 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         httpRequest = (HttpServletRequest) request;
-
+		//FilterBilder.init(request, response, chain).setMatchAction().doFilter();
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
         if (path.startsWith("/admin/")) {

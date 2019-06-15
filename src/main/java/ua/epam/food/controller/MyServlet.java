@@ -1,8 +1,5 @@
 package ua.epam.food.controller;
 
-import ua.epam.food.dao.entity.TestEntity;
-import ua.epam.food.dao.repository.TestRepository;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
