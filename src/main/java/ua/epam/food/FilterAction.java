@@ -6,12 +6,15 @@
 package ua.epam.food;
 
 import java.io.IOException;
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  *
  * @author nmcdo5
  */
 public interface FilterAction {
-	void execute() throws IOException, ServletException;
+	void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException;
 }

@@ -1,5 +1,6 @@
 package ua.epam.food.core.security.matcher;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.regex.Pattern;
@@ -13,8 +14,10 @@ public class RegexMethodRequestMatcher implements RequestMatcher {
     }
 
     @Override
-    public boolean matches(HttpServletRequest request) {
-        return method.matcher(request.getMethod()).matches();
+    public boolean matches(ServletRequest request) {
+        HttpServletRequest http =  (HttpServletRequest)request;
+        String httpMethod = http.getMethod();
+        return method.matcher(httpMethod).matches();
     }
 
 }
