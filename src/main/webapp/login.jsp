@@ -1,24 +1,54 @@
-
-<%@ page language="java" contentType="text/html; charset=US-ASCII"
-         pageEncoding="US-ASCII"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="US-ASCII">
-    <title>Login Page</title>
-</head>
+<html lang="en">
+<jsp:include page="fragments/head.jsp" />
 <body>
+<div class="container">
+    <jsp:include page="fragments/navbar.jsp" />
+</div>
 
-<form action="LoginServlet" method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Вхід до системи</h5>
+                    <form class="form-signin" method="POST" action="/login">
+                        <div class="form-label-group">
+                            <input type="login" id="inputLogin" class="form-control" placeholder="Логін" required="true" autofocus="true" name="username" />
+                            <label for="inputLogin">Логін</label>
+                        </div>
 
-    Username: <input type="text" name="user"/>
-    <br/>
-    Password: <input type="password" name="pwd"/>
-    <br/>
-    <input type="hidden" name="${csrf_field_name}" value="${csrf_token}"/>
-    <input type="submit" value="Login"/>
-</form>
-</body>
-</html>
+                        <div class="form-label-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="true" name="password" />
+                            <label for="inputPassword">Пароль</label>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Увійти</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+
+ <%--   <form class="form-signin" action="/login">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputLogin" class="sr-only">Логин</label>
+        <input id="inputLogin" class="form-control" placeholder="Логин" required="" autofocus="" name="user">
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="" name="pwd">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
+    </form>
+--%>
+    <jsp:include page="fragments/footer.jsp" />
+</div><!-- /.container -->
+</body></html>

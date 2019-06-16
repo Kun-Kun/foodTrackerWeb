@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -27,23 +27,6 @@ public class LoginServlet extends HttpServlet {
         }else {
             response.sendRedirect("/login.jsp");
         }
-
-
-       /* if(userID.equals(user) && password.equals(pwd)){
-
-            session.setAttribute("user", "Pankaj");
-            //setting session to expiry in 30 mins
-            session.setMaxInactiveInterval(30*60);
-            Cookie userName = new Cookie("user", user);
-            userName.setMaxAge(30*60);
-            response.addCookie(userName);
-            response.sendRedirect("LoginSuccess.jsp");
-        }else{
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
-            PrintWriter out= response.getWriter();
-            out.println("<font color=red>Either user name or password is wrong.</font>");
-            rd.include(request, response);
-        }*/
 
     }
 }
