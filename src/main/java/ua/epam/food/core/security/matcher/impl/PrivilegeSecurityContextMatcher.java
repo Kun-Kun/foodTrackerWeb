@@ -1,8 +1,9 @@
-package ua.epam.food.core.security.matcher;
+package ua.epam.food.core.security.matcher.impl;
 
 import ua.epam.food.core.security.context.SecurityContextHolder;
 import ua.epam.food.core.security.data.Privilege;
 import ua.epam.food.core.security.data.UserDetail;
+import ua.epam.food.core.security.matcher.RequestMatcher;
 
 import javax.servlet.ServletRequest;
 

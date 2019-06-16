@@ -1,7 +1,7 @@
 package ua.epam.food.services;
 
-import ua.epam.food.core.security.PasswordEncoder;
-import ua.epam.food.core.security.ShaPasswordEncoder;
+import ua.epam.food.core.security.encoder.PasswordEncoder;
+import ua.epam.food.core.security.encoder.impl.ShaPasswordEncoder;
 import ua.epam.food.dao.entity.UserEntity;
 import ua.epam.food.dao.repository.UserRepository;
 

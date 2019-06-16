@@ -1,4 +1,6 @@
-package ua.epam.food.core.security;
+package ua.epam.food.core.security.encoder.impl;
+
+import ua.epam.food.core.security.encoder.PasswordEncoder;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

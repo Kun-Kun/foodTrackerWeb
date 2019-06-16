@@ -1,6 +1,8 @@
-package ua.epam.food.core.security.data;
+package ua.epam.food.core.security.data.impl;
 
-public class SimplePrivilege implements Privilege{
+import ua.epam.food.core.security.data.Privilege;
+
+public class SimplePrivilege implements Privilege {
 
     private String privilege;
 

@@ -1,4 +1,7 @@
-package ua.epam.food.core.security.data;
+package ua.epam.food.core.security.data.impl;
+
+import ua.epam.food.core.security.data.User;
+import ua.epam.food.core.security.data.UserDetail;
 
 public class SimpleUserDetail implements UserDetail {
     private User user;

@@ -1,16 +1,12 @@
 package ua.epam.food.controller;
 
-import ua.epam.food.core.security.PasswordEncoder;
-import ua.epam.food.core.security.ShaPasswordEncoder;
 import ua.epam.food.services.UserAuthenticationService;
 import ua.epam.food.services.UserAuthenticationServiceImpl;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {

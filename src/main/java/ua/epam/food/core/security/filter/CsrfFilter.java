@@ -2,7 +2,7 @@ package ua.epam.food.core.security.filter;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import ua.epam.food.core.security.matcher.RegexMethodRequestMatcher;
+import ua.epam.food.core.security.matcher.impl.RegexMethodRequestMatcher;
 import ua.epam.food.core.security.matcher.RequestMatcher;
 import ua.epam.food.exception.CsrfErrorException;
 

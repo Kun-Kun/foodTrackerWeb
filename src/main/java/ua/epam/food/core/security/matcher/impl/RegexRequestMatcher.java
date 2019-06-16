@@ -1,4 +1,6 @@
-package ua.epam.food.core.security.matcher;
+package ua.epam.food.core.security.matcher.impl;
+
+import ua.epam.food.core.security.matcher.RequestMatcher;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;

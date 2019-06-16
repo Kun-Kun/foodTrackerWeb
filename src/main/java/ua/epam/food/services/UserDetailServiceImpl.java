@@ -1,6 +1,10 @@
 package ua.epam.food.services;
 
 import ua.epam.food.core.security.data.*;
+import ua.epam.food.core.security.data.impl.SimplePrivilege;
+import ua.epam.food.core.security.data.impl.SimpleRole;
+import ua.epam.food.core.security.data.impl.SimpleUser;
+import ua.epam.food.core.security.data.impl.SimpleUserDetail;
 import ua.epam.food.dao.entity.ProfileEntity;
 import ua.epam.food.dao.repository.ProfileRepository;
 import ua.epam.food.dto.Profile;

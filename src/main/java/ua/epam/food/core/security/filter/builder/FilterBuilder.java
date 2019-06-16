@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ua.epam.food;
+package ua.epam.food.core.security.filter.builder;
 
 import ua.epam.food.core.security.data.Privilege;
 import ua.epam.food.core.security.data.Role;
 import ua.epam.food.core.security.matcher.*;
+import ua.epam.food.core.security.matcher.impl.AuthenticatedSecurityContextMatcher;
+import ua.epam.food.core.security.matcher.impl.PrivilegeSecurityContextMatcher;
+import ua.epam.food.core.security.matcher.impl.RegexRequestMatcher;
+import ua.epam.food.core.security.matcher.impl.RoleSecurityContextMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,7 +26,6 @@ import java.util.Set;
  * @author nmcdo5
  */
 public class FilterBuilder implements FilterAction {
-    //private FilterBuilder superBuilder = null;
 
     private Set<RequestMatcher> subMatchers = new HashSet<>();
     private FilterAction matchAction;
@@ -81,14 +84,6 @@ public class FilterBuilder implements FilterAction {
     public DefaultAction setDefaultAction() {
         return new DefaultAction(this);
     }
-
-   /* public FilterBuilder compile() {
-        FilterBuilder topInstance = this;
-        while (topInstance.superBuilder != null) {
-            topInstance = topInstance.superBuilder;
-        }
-        return topInstance;
-    }*/
 
     @Override
     public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -170,10 +165,7 @@ public class FilterBuilder implements FilterAction {
             return new DefaultAction(filterBuilderInstance);
         }
 
-		/*public FilterBuilder commit(){
-            return filterBuilderInstance;
-		}*/
-    }
+	}
 
     public class MatchAction extends AbstractAction {
 
@@ -261,13 +253,6 @@ public class FilterBuilder implements FilterAction {
             });
             return filterBuilderInstance;
         }
-
-      /*  public FilterBuilder filterBranch() {
-            FilterBuilder filterBuilder = FilterBuilder.init();
-            filterBuilder.superBuilder = this.filterBuilderInstance;
-            setActionField(filterBuilder);
-            return filterBuilder;
-        }*/
 
         public FilterBuilder filterBranch(FilterAction filter) {
             setActionField(filter);

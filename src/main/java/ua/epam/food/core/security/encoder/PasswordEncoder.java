@@ -1,4 +1,4 @@
-package ua.epam.food.core.security;
+package ua.epam.food.core.security.encoder;
 
 public interface PasswordEncoder {
 

@@ -1,4 +1,6 @@
-package ua.epam.food.core.security.data;
+package ua.epam.food.core.security.data.impl;
+
+import ua.epam.food.core.security.data.Role;
 
 public class SimpleRole implements Role {
 

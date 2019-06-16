@@ -1,12 +1,11 @@
 package ua.epam.food.core.security.filter;
 
-import ua.epam.food.FilterAction;
-import ua.epam.food.FilterBuilder;
+import ua.epam.food.core.security.filter.builder.FilterAction;
+import ua.epam.food.core.security.filter.builder.FilterBuilder;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter("/AuthorizationUriFilter")

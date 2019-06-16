@@ -1,19 +1,16 @@
-package ua.epam.food.core.security.matcher;
+package ua.epam.food.core.security.matcher.impl;
 
 import ua.epam.food.core.security.context.SecurityContextHolder;
-import ua.epam.food.core.security.data.Privilege;
-import ua.epam.food.core.security.data.Role;
 import ua.epam.food.core.security.data.UserDetail;
+import ua.epam.food.core.security.matcher.RequestMatcher;
 
 import javax.servlet.ServletRequest;
 
-public class RoleSecurityContextMatcher implements RequestMatcher {
+public class AuthenticatedSecurityContextMatcher implements RequestMatcher {
     private final boolean inversion;
-    private final Role role;
 
-    public RoleSecurityContextMatcher(Role role, boolean inversion) {
+    public AuthenticatedSecurityContextMatcher(boolean inversion) {
         this.inversion = inversion;
-        this.role = role;
     }
 
     @Override
@@ -21,7 +18,7 @@ public class RoleSecurityContextMatcher implements RequestMatcher {
         Boolean returnValue;
         UserDetail userDetail = SecurityContextHolder.getInstance().getSecurityData();
         if (userDetail!=null&&userDetail.getUser()!=null){
-            returnValue = userDetail.getUser().getRoles().contains(role);
+            returnValue = userDetail.getUser().isAuthenticated();
         }else {
             returnValue = false;
         }
