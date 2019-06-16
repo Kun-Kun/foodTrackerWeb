@@ -18,8 +18,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@WebFilter("/AuthorizationFilter")
-public class AuthorizationFilter implements Filter {
+@WebFilter("/AuthorizationUserLoaderFilter")
+public class AuthorizationUserLoaderFilter implements Filter {
 
     private ServletContext context;
     private SecurityContextHolder contextHolder = SecurityContextHolder.getInstance();
@@ -27,7 +27,7 @@ public class AuthorizationFilter implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {
         this.context = fConfig.getServletContext();
-        this.context.log("AuthorizationFilter initialized");
+        this.context.log("AuthorizationUserLoaderFilter initialized");
     }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

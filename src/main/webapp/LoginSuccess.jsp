@@ -31,6 +31,7 @@ User=<%--<%=user %>--%>
 <br>
 <a href="CheckoutPage.jsp">Checkout Page</a>
 <form action="LogoutServlet" method="post">
+    <input type="hidden" name="${csrf_field_name}" value="${csrf_token}"/>
     <input type="submit" value="Logout" >
 </form>
 </body>

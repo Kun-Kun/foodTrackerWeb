@@ -1,16 +1,9 @@
 package ua.epam.food.services;
 
-import ua.epam.food.core.security.data.Privilege;
-import ua.epam.food.core.security.data.Role;
-import ua.epam.food.core.security.data.SimplePrivilege;
-import ua.epam.food.core.security.data.SimpleRole;
-import ua.epam.food.core.security.data.SimpleUserDetail;
-import ua.epam.food.core.security.data.UserDetail;
+import ua.epam.food.core.security.data.*;
 import ua.epam.food.dao.entity.ProfileEntity;
 import ua.epam.food.dao.repository.ProfileRepository;
 import ua.epam.food.dto.Profile;
-import ua.epam.food.core.security.data.SimpleUser;
-import ua.epam.food.core.security.data.User;
 import ua.epam.food.dao.entity.RoleEntity;
 import ua.epam.food.dao.entity.UserEntity;
 import ua.epam.food.dao.repository.PrivilegeRepository;
@@ -65,14 +58,14 @@ public class UserDetailServiceImpl implements UserDetailService{
         SimpleUserDetail userDetail = new SimpleUserDetail();
 
         if (username==null){
-            userDetail.setProfile(getGuestUser());
+            userDetail.setUser(getGuestUser());
             return userDetail;
         }
 
         UserEntity user = userRepository.findByUsername(username);
 
         if (user == null) {
-            userDetail.setProfile(getGuestUser());
+            userDetail.setUser(getGuestUser());
             return userDetail;
         }else {
             userDetail.setUser(loadUserByUserEntity(user));

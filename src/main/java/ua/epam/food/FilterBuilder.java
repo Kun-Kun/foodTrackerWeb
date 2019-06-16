@@ -5,145 +5,274 @@
  */
 package ua.epam.food;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import ua.epam.food.core.security.data.Privilege;
+import ua.epam.food.core.security.data.Role;
+import ua.epam.food.core.security.matcher.*;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-
-import ua.epam.food.core.security.matcher.RegexRequestMatcher;
-import ua.epam.food.core.security.matcher.RequestMatcher;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- *
  * @author nmcdo5
  */
-public class FilterBuilder implements FilterAction{
-	private List<RequestMatcher> requestMatchers = new ArrayList<>();
-	private FilterAction matchAction;
-	private FilterAction defaultAction;
-	
-	public static FilterBuilder init(){
-		return new FilterBuilder();
-	}
-	
-	public FilterBuilder matches(String pattern){
-		requestMatchers.add(new RegexRequestMatcher(pattern));
-		return this;
-	}
-	
-	public MatchAction setMatchAction(){
-		return new MatchAction(this);
-	}
+public class FilterBuilder implements FilterAction {
+    //private FilterBuilder superBuilder = null;
 
-	public DefaultAction setDefaultAction(){
-		return new DefaultAction(this);
-	}
+    private Set<RequestMatcher> subMatchers = new HashSet<>();
+    private FilterAction matchAction;
+    private FilterAction defaultAction;
 
-	@Override
-	public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		for (RequestMatcher matcher: requestMatchers){
-			if (matcher.matches(request)){
-				matchAction.execute(request,response,chain);
-				return;
-			}
-		}
-		defaultAction.execute(request,response,chain);
-	}
+    public static FilterBuilder init() {
+        return new FilterBuilder();
+    }
 
-	public class MatchAction extends AbstractAction {
+    public SubMatcher uriMatches(String pattern) {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.uriMatches(pattern);
+        return subMatcher;
+    }
 
-		public MatchAction(FilterBuilder parentInstance) {
-			super(parentInstance);
-		}
+    public SubMatcher isAuthenticated() {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.isAuthenticated();
+        return subMatcher;
+    }
 
-		@Override
-		protected void setActionField(FilterAction action) {
-			matchAction = action;
-		}
-	}
+    public SubMatcher isNotAuthenticated() {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.isAuthenticated();
+        return subMatcher;
+    }
 
-	public class DefaultAction extends AbstractAction {
+    public SubMatcher hasRole(Role role) {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.hasRole(role);
+        return subMatcher;
+    }
 
-		public DefaultAction(FilterBuilder parentInstance) {
-			super(parentInstance);
-		}
+    public SubMatcher doesntHaveRole(Role role) {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.doesntHaveRole(role);
+        return subMatcher;
+    }
 
-		@Override
-		protected void setActionField(FilterAction action) {
-			defaultAction = action;
-		}
-	}
+    public SubMatcher hasPrivilege(Privilege privilege) {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.hasPrivilege(privilege);
+        return subMatcher;
+    }
 
-	private abstract class AbstractAction {
-		private FilterBuilder parentInstance;
+    public SubMatcher doesntHavePrivilege(Privilege privilege) {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.doesntHavePrivilege(privilege);
+        return subMatcher;
+    }
 
-		public AbstractAction(FilterBuilder parentInstance) {
-			this.parentInstance = parentInstance;
-		}
+    public MatchAction setMatchAction() {
+        return new MatchAction(this);
+    }
 
-		protected abstract void setActionField(FilterAction action);
+    public DefaultAction setDefaultAction() {
+        return new DefaultAction(this);
+    }
 
-		public FilterBuilder doFilter() {
-			setActionField(new FilterAction() {
-				@Override
-				public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,ServletException{
-					chain.doFilter(request, response);
-				}
-			});
-			return parentInstance;
-		}
+   /* public FilterBuilder compile() {
+        FilterBuilder topInstance = this;
+        while (topInstance.superBuilder != null) {
+            topInstance = topInstance.superBuilder;
+        }
+        return topInstance;
+    }*/
 
-		public FilterBuilder throwException(RuntimeException exception) {
-			setActionField(new FilterAction() {
-				@Override
-				public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,ServletException{
-					throw exception;
-				}
-			});
-			return parentInstance;
-		}
+    @Override
+    public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        for (RequestMatcher matcher : subMatchers) {
+            if (!matcher.matches(request)) {
+                defaultAction.execute(request, response, chain);
+                return;
+            }
+        }
+        matchAction.execute(request, response, chain);
 
-		public FilterBuilder sendError(int responseCode) {
-			setActionField(new FilterAction() {
-				@Override
-				public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,ServletException{
+    }
 
-					HttpServletResponse http = (HttpServletResponse) response;
-					http.sendError(responseCode);
-				}
-			});
-			return parentInstance;
-		}
+    public class SubMatcher implements RequestMatcher {
 
-		public FilterBuilder sendRedirect(String url) {
-			setActionField(new FilterAction() {
-				@Override
-				public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,ServletException{
+        private FilterBuilder filterBuilderInstance;
+        private Set<RequestMatcher> requestMatchers = new HashSet<>();
 
-					HttpServletResponse http = (HttpServletResponse) response;
-					http.sendRedirect(url);
-				}
-			});
-			return parentInstance;
-		}
+        private SubMatcher(FilterBuilder parentInstance) {
+            this.filterBuilderInstance = parentInstance;
+        }
 
-		public FilterBuilder forward(String url) {
-			setActionField(new FilterAction() {
-				@Override
-				public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,ServletException{
-					request.getRequestDispatcher(url).forward(request, response);
-				}
-			});
-			return parentInstance;
-		}
+        @Override
+        public boolean matches(ServletRequest request) {
+            for (RequestMatcher matcher : requestMatchers) {
+                if (matcher.matches(request)) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
-		public FilterBuilder filterBranch() {
-			return FilterBuilder.init();
-		}
-	}
-	
+        public SubMatcher uriMatches(String pattern) {
+            requestMatchers.add(new RegexRequestMatcher(pattern));
+            return this;
+        }
+        public SubMatcher isAuthenticated() {
+            requestMatchers.add(new AuthenticatedSecurityContextMatcher(false));
+            return this;
+        }
+
+        public SubMatcher isNotAuthenticated() {
+            requestMatchers.add(new AuthenticatedSecurityContextMatcher(true));
+            return this;
+        }
+
+        public SubMatcher hasRole(Role role) {
+            requestMatchers.add(new RoleSecurityContextMatcher(role,false));
+            return this;
+        }
+
+        public SubMatcher doesntHaveRole(Role role) {
+            requestMatchers.add(new RoleSecurityContextMatcher(role,true));
+            return this;
+        }
+
+        public SubMatcher hasPrivilege(Privilege privilege) {
+            requestMatchers.add(new PrivilegeSecurityContextMatcher(privilege,false));
+            return this;
+        }
+
+        public SubMatcher doesntHavePrivilege(Privilege privilege) {
+            requestMatchers.add(new PrivilegeSecurityContextMatcher(privilege,true));
+            return this;
+        }
+
+        public SubMatcher and() {
+            subMatchers.add(this);
+            return new SubMatcher(filterBuilderInstance);
+        }
+
+        public MatchAction setMatchAction() {
+            subMatchers.add(this);
+            return new MatchAction(filterBuilderInstance);
+        }
+
+        public DefaultAction setDefaultAction() {
+            subMatchers.add(this);
+            return new DefaultAction(filterBuilderInstance);
+        }
+
+		/*public FilterBuilder commit(){
+            return filterBuilderInstance;
+		}*/
+    }
+
+    public class MatchAction extends AbstractAction {
+
+        private MatchAction(FilterBuilder parentInstance) {
+            super(parentInstance);
+        }
+
+        @Override
+        protected void setActionField(FilterAction action) {
+            matchAction = action;
+        }
+    }
+
+    public class DefaultAction extends AbstractAction {
+
+        private DefaultAction(FilterBuilder parentInstance) {
+            super(parentInstance);
+        }
+
+        @Override
+        protected void setActionField(FilterAction action) {
+            defaultAction = action;
+        }
+    }
+
+    private abstract class AbstractAction {
+        private FilterBuilder filterBuilderInstance;
+
+        private AbstractAction(FilterBuilder parentInstance) {
+            this.filterBuilderInstance = parentInstance;
+        }
+
+        protected abstract void setActionField(FilterAction action);
+
+        public FilterBuilder doFilter() {
+            setActionField(new FilterAction() {
+                @Override
+                public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+                    chain.doFilter(request, response);
+                }
+            });
+            return filterBuilderInstance;
+        }
+
+        public FilterBuilder throwException(RuntimeException exception) {
+            setActionField(new FilterAction() {
+                @Override
+                public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+                    throw exception;
+                }
+            });
+            return filterBuilderInstance;
+        }
+
+        public FilterBuilder sendError(int responseCode) {
+            setActionField(new FilterAction() {
+                @Override
+                public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+                    HttpServletResponse http = (HttpServletResponse) response;
+                    http.sendError(responseCode);
+                }
+            });
+            return filterBuilderInstance;
+        }
+
+        public FilterBuilder sendRedirect(String url) {
+            setActionField(new FilterAction() {
+                @Override
+                public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+                    HttpServletResponse http = (HttpServletResponse) response;
+                    http.sendRedirect(url);
+                }
+            });
+            return filterBuilderInstance;
+        }
+
+        public FilterBuilder forward(String url) {
+            setActionField(new FilterAction() {
+                @Override
+                public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+                    request.getRequestDispatcher(url).forward(request, response);
+                }
+            });
+            return filterBuilderInstance;
+        }
+
+      /*  public FilterBuilder filterBranch() {
+            FilterBuilder filterBuilder = FilterBuilder.init();
+            filterBuilder.superBuilder = this.filterBuilderInstance;
+            setActionField(filterBuilder);
+            return filterBuilder;
+        }*/
+
+        public FilterBuilder filterBranch(FilterAction filter) {
+            setActionField(filter);
+            return filterBuilderInstance;
+        }
+    }
+
 }

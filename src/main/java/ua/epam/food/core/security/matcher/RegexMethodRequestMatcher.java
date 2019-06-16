@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class RegexMethodRequestMatcher implements RequestMatcher {
 
-    private Pattern method;//
+    private Pattern method;
 
     public RegexMethodRequestMatcher(String methods) {
         this.method = Pattern.compile(methods);
