@@ -18,10 +18,7 @@ public class RegexRequestMatcher implements RequestMatcher {
     public boolean matches(ServletRequest request) {
 
         HttpServletRequest http =  (HttpServletRequest)request;
-        String uri = http.getRequestURI();
-        System.out.println();
-        System.out.println("uri "+uri);
-        System.out.println("urlPattern.pattern() "+urlPattern.pattern());
+        String uri = http.getRequestURI().substring(http.getContextPath().length());
         return urlPattern.matcher(uri).matches();
     }
 

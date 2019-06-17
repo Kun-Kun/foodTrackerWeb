@@ -15,5 +15,16 @@
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <c:if test="${userInformation.user.isAuthenticated == false}">
+        <a class="btn btn-outline-primary" href="#">Sign up</a>
+    </c:if>
+    <%-- <c:if test="${userInformation.user.isAuthenticated == true}">
+        <c:if test="${fn:length(userInformation.user.firstName)>0}">
+            <a class="p-2 text-dark" href="#"><c:out value="${userInformation.user.firstName}" /></a>             
+         </c:if>
+         <c:if test="${fn:length(userInformation.user.firstName)==0}">        
+         </c:if>        
+        <a class="p-2 text-dark" href="#"><c:out value="${userInformation.user.username}" /></a>     
+        <a class="btn btn-outline-primary" href="#">Logout</a>
+    </c:if>--%> 
 </div>

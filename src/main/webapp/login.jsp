@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/head.jsp" />
+<c:import url="fragments/head.jsp" />
 <body>
 <div class="container">
-    <jsp:include page="fragments/navbar.jsp" />
+    <c:import url="fragments/navbar.jsp" />
 </div>
 
 <div class="container">
@@ -49,6 +50,6 @@
         <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
     </form>
 --%>
-    <jsp:include page="fragments/footer.jsp" />
+    <c:import url="fragments/footer.jsp" />
 </div><!-- /.container -->
 </body></html>
