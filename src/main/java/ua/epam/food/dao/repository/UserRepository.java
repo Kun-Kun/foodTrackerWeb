@@ -1,6 +1,7 @@
 package ua.epam.food.dao.repository;
 
 import ua.epam.food.core.db.orm.impl.AbstractObjectRelationMapper;
+import ua.epam.food.dao.entity.ProfileEntity;
 import ua.epam.food.dao.entity.UserEntity;
 
 public class UserRepository extends AbstractObjectRelationMapper<UserEntity,Integer> {
@@ -34,6 +35,5 @@ public class UserRepository extends AbstractObjectRelationMapper<UserEntity,Inte
     public UserEntity findByUsername(String username){
         return findOneQuery("SELECT * FROM user WHERE username LIKE ?",username);
     }
-
 
 }

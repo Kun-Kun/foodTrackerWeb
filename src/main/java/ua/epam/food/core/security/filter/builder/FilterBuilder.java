@@ -17,7 +17,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -236,7 +238,6 @@ public class FilterBuilder implements FilterAction {
             setActionField(new FilterAction() {
                 @Override
                 public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
                     HttpServletResponse http = (HttpServletResponse) response;
                     http.sendRedirect(url);
                 }
@@ -248,6 +249,7 @@ public class FilterBuilder implements FilterAction {
             setActionField(new FilterAction() {
                 @Override
                 public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+                    storeUrlInParameter("origin",request);
                     request.getRequestDispatcher(url).forward(request, response);
                 }
             });
@@ -257,6 +259,17 @@ public class FilterBuilder implements FilterAction {
         public FilterBuilder filterBranch(FilterAction filter) {
             setActionField(filter);
             return filterBuilderInstance;
+        }
+
+        private void storeUrlInSession(String parameterName, ServletRequest request){
+            HttpServletRequest http = (HttpServletRequest) request;
+            HttpSession session = http.getSession(true);
+            session.setAttribute(parameterName, http.getRequestURI().substring(http.getContextPath().length()));
+        }
+
+        private void storeUrlInParameter(String parameterName, ServletRequest request){
+            HttpServletRequest http = (HttpServletRequest) request;
+            request.setAttribute(parameterName, http.getRequestURI().substring(http.getContextPath().length()));
         }
     }
 

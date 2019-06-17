@@ -26,7 +26,7 @@ public class ProfileRepository extends AbstractObjectRelationMapper<ProfileEntit
 
     @Override
     protected String getTableName() {
-        return "privilege";
+        return "profile";
     }
 
     @Override
@@ -36,5 +36,9 @@ public class ProfileRepository extends AbstractObjectRelationMapper<ProfileEntit
 
     public ProfileEntity findByUserId(Integer userId){
         return findOneQuery("SELECT * FROM profile WHERE user_id LIKE ?",userId);
+    }
+
+    public ProfileEntity findByEmail(String email){
+        return findOneQuery("SELECT * FROM profile WHERE email LIKE ?",email);
     }
 }

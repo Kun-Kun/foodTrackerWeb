@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/LogoutServlet")
+@WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -19,7 +19,7 @@ public class LogoutServlet extends HttpServlet {
         //invalidate the session if exists
         HttpSession session = request.getSession(false);
         userAuthenticationService.logout(session);
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("/");
     }
 
 }

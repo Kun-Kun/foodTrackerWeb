@@ -42,22 +42,24 @@ CREATE TABLE `privilege` (
 CREATE TABLE `profile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `first_name` varchar(50),
-  `last_name` varchar(50),
-  `email` varchar(50) NOT NULL,
-  `goal` int(11) default 0,
-  `height` int(11),
-  `weight` float,
-  `birthday` DATE,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `email` varchar(50) NOT NULL UNIQUE,
+  `goal_id` int(11) DEFAULT '0' NOT NULL,
+  `diet_id` int(11) DEFAULT '0' NOT NULL,
+  `height` int(11) DEFAULT NULL,
+  `weight` float DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
 INSERT INTO `tracker`.`profile`
 (`id`,
 `user_id`,
 `first_name`,
 `last_name`,
 `email`,
-`goal`,
+`goal_id`,
 `height`,
 `weight`,
 `birthday`)

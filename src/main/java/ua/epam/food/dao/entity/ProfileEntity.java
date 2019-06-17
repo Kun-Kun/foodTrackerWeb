@@ -15,7 +15,8 @@ public class ProfileEntity {
     private String firstName;
     private String lastName;
     private String email;
-    private Integer goal;
+    private Integer goalId;
+    private Integer dietId;
     private Integer height;
     private Float weight;
 

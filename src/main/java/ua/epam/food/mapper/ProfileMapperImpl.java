@@ -17,7 +17,8 @@ public class ProfileMapperImpl implements ProfileMapper {
         profile.setFirstName( entity.getFirstName() );
         profile.setLastName( entity.getLastName() );
         profile.setEmail( entity.getEmail() );
-        profile.setGoal( entity.getGoal() );
+        profile.setGoalId( entity.getGoalId() );
+        profile.setDietId( entity.getDietId() );
         profile.setHeight( entity.getHeight() );
         profile.setWeight( entity.getWeight() );
         profile.setBirthday(entity.getBirthday());

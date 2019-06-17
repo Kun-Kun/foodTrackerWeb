@@ -6,8 +6,8 @@ import ua.epam.food.core.db.mapper.Mapper;
 import ua.epam.food.core.db.mapper.impl.MapperImpl;
 import ua.epam.food.core.db.orm.ObjectRelationMapper;
 import ua.epam.food.core.db.tool.KeyStringValueArray;
-import ua.epam.food.exception.WrongInputException;
-import ua.epam.food.exception.WrongResultException;
+import ua.epam.food.exception.InvalidInputException;
+import ua.epam.food.exception.InvalidResultException;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,10 +40,10 @@ public abstract class AbstractObjectRelationMapper<E, ID> implements ObjectRelat
         return Collections.emptyList();
     }
 
-    public E findOne(ID id) throws WrongResultException {
+    public E findOne(ID id) throws InvalidResultException {
         List<Map<String, Object>> result = queryExecutorService.find("SELECT * FROM " + getTableName() + " WHERE " + getIdFieldName() + " = ?", id);
         if (result.size() != 1) {
-            throw new WrongResultException();
+            throw new InvalidResultException();
         }
         return mapper.convertValue(result.get(0), getMappedClass());
     }
@@ -71,14 +71,14 @@ public abstract class AbstractObjectRelationMapper<E, ID> implements ObjectRelat
         queryExecutorService.update("DELETE FROM " + getTableName() + " WHERE " + getIdFieldName() + " = ?", ids);
     }
 
-    public void deleteById(ID id) throws WrongInputException {
+    public void deleteById(ID id) throws InvalidInputException {
         if (id == null) {
-            throw new WrongInputException();
+            throw new InvalidInputException();
         }
         queryExecutorService.update("DELETE FROM " + getTableName() + " WHERE " + getIdFieldName() + " = ?", id);
     }
 
-    public void delete(E entity) throws WrongInputException {
+    public void delete(E entity) throws InvalidInputException {
         Map<String, Object> map = mapper.convertValue(entity, Map.class);
         ID id = (ID) map.get(getIdFieldName());
         deleteById(id);
@@ -95,7 +95,7 @@ public abstract class AbstractObjectRelationMapper<E, ID> implements ObjectRelat
             return mapper.convertValue(result.get(0), clazz);
         } else if (result.isEmpty()) {
             return null;
-        } else throw new WrongResultException();
+        } else throw new InvalidResultException();
     }
 
     public <T> T getSingleValueQuery(String sql, Class<T> clazz, Object... param) {
@@ -105,7 +105,7 @@ public abstract class AbstractObjectRelationMapper<E, ID> implements ObjectRelat
             return mapper.convertValue(value, clazz);
         } else if (result.isEmpty()) {
             return null;
-        } else throw new WrongResultException();
+        } else throw new InvalidResultException();
     }
 
     public List<E> findAllQuery(String sql, Object... param) {
@@ -113,13 +113,13 @@ public abstract class AbstractObjectRelationMapper<E, ID> implements ObjectRelat
         return mapper.convertCollectionType(result, List.class, getMappedClass());
     }
 
-    public E findOneQuery(String sql, Object... param) throws WrongResultException {
+    public E findOneQuery(String sql, Object... param) throws InvalidResultException {
         List<Map<String, Object>> result = queryExecutorService.find(sql, param);
         if (result.size() == 1) {
             return mapper.convertValue(result.get(0), getMappedClass());
         } else if (result.isEmpty()) {
             return null;
-        } else throw new WrongResultException();
+        } else throw new InvalidResultException();
     }
 
 

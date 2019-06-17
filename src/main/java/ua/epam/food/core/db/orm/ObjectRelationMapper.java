@@ -1,7 +1,7 @@
 package ua.epam.food.core.db.orm;
 
-import ua.epam.food.exception.WrongInputException;
-import ua.epam.food.exception.WrongResultException;
+import ua.epam.food.exception.InvalidInputException;
+import ua.epam.food.exception.InvalidResultException;
 
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface ObjectRelationMapper<E, ID> {
 
     List<E> saveAll(List<E> entities);
 
-    E findOne(ID id) throws WrongResultException;
+    E findOne(ID id) throws InvalidResultException;
 
     List<E> findAll();
 
@@ -20,9 +20,9 @@ public interface ObjectRelationMapper<E, ID> {
 
     void deleteAll(List<E> entities);
 
-    void deleteById(ID id) throws WrongInputException;
+    void deleteById(ID id) throws InvalidInputException;
 
-    void delete(E entity) throws WrongInputException;
+    void delete(E entity) throws InvalidInputException;
 
     boolean existsById(ID id);
 
@@ -32,7 +32,7 @@ public interface ObjectRelationMapper<E, ID> {
 
     List<E> findAllQuery(String sql, Object... param);
 
-    E findOneQuery(String sql, Object... param) throws WrongResultException;
+    E findOneQuery(String sql, Object... param) throws InvalidResultException;
 
     int updateQuery(String sql, Object... param);
 

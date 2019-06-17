@@ -11,14 +11,14 @@ public class SimpleUser implements User {
     private boolean isEnabled;
     private List<Role> roles;
     private List<Privilege> privileges;
-    private boolean isAuthenticated;
+    private boolean authenticated;
 
     public SimpleUser(String username, boolean isEnabled, List<Role> roles, List<Privilege> privileges, boolean isAuthenticated) {
         this.username = username;
         this.isEnabled = isEnabled;
         this.roles = roles;
         this.privileges = privileges;
-        this.isAuthenticated = isAuthenticated;
+        this.authenticated = isAuthenticated;
     }
 
     @Override
@@ -59,10 +59,10 @@ public class SimpleUser implements User {
 
     @Override
     public boolean isAuthenticated() {
-        return isAuthenticated;
+        return authenticated;
     }
 
     public void setAuthenticated(boolean authenticated) {
-        isAuthenticated = authenticated;
+        authenticated = authenticated;
     }
 }

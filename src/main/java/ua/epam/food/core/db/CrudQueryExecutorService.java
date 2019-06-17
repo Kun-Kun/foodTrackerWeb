@@ -1,6 +1,7 @@
 package ua.epam.food.core.db;
 
 import org.apache.commons.dbutils.DbUtils;
+import ua.epam.food.exception.ApplicationDatabaseException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -49,9 +50,8 @@ public class CrudQueryExecutorService<I> {
                 return resultList;
 
         } catch (SQLException ssql) {
-            ssql.printStackTrace();
+            throw new ApplicationDatabaseException(ssql);
         }
-        return null;
     }
 
     public Map<String, Object> findFirst(String sql, Object... parameters) {
@@ -62,9 +62,9 @@ public class CrudQueryExecutorService<I> {
                 DbUtils.closeQuietly(result.getStatement());
                 return resultMap;
         } catch (SQLException ssql) {
-            ssql.printStackTrace();
+            throw new ApplicationDatabaseException(ssql);
         }
-        return null;
+        //return null;
     }
 
 
@@ -72,18 +72,18 @@ public class CrudQueryExecutorService<I> {
         try (Connection conn = dataSource.getConnection()) {
             return queryExecutor.executeSqlUpdateAffectedRowsCount(conn, sql, parameters);
         } catch (SQLException ssql) {
-            ssql.printStackTrace();
+            throw new ApplicationDatabaseException(ssql);
         }
-        return 0;
+        //return 0;
     }
 
     public int update(String sql, List<Object[]> items) {
         try (Connection conn = dataSource.getConnection()) {
             return queryExecutor.executeSqlUpdateAffectedRowsCount(conn, sql, items);
         } catch (SQLException ssql) {
-            ssql.printStackTrace();
+            throw new ApplicationDatabaseException(ssql);
         }
-        return 0;
+        //return 0;
     }
 
     public List<I> updateAndReturnAffectedIds(String sql, Object ... parameters) {
@@ -95,7 +95,7 @@ public class CrudQueryExecutorService<I> {
                 }
             DbUtils.closeQuietly(result.getStatement());
         } catch (SQLException ssql) {
-            ssql.printStackTrace();
+            throw new ApplicationDatabaseException(ssql);
         }
         return keyList;
     }
@@ -109,7 +109,7 @@ public class CrudQueryExecutorService<I> {
             }
             DbUtils.closeQuietly(result.getStatement());
         } catch (SQLException ssql) {
-            ssql.printStackTrace();
+            throw new ApplicationDatabaseException(ssql);
         }
         return keyList;
     }

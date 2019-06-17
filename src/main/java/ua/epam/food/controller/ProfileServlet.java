@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/s")
-public class MyServlet extends HttpServlet {
+@WebServlet("/profile")
+public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,12 +22,7 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        String varTextA = "Hello World!";
-        request.setAttribute("textA", varTextA);
-        String varTextB = "It JSP.";
-        request.setAttribute("textB", varTextB);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index1.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
         dispatcher.forward(request, response);
     }
 }

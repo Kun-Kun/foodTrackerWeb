@@ -4,7 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import ua.epam.food.core.security.matcher.impl.RegexMethodRequestMatcher;
 import ua.epam.food.core.security.matcher.RequestMatcher;
-import ua.epam.food.exception.CsrfErrorException;
+import ua.epam.food.exception.ApplicationCsrfErrorException;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -24,7 +24,7 @@ public class CsrfFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException, CsrfErrorException {
+            throws IOException, ServletException, ApplicationCsrfErrorException {
 
 
         // Assume its HTTP
@@ -60,7 +60,7 @@ public class CsrfFilter implements Filter {
             if (incomingCsrf != null && csrfPreventionSaltCache.getIfPresent(incomingCsrf) != null) {
                 chain.doFilter(request, response);
             } else {
-                throw new CsrfErrorException();
+                throw new ApplicationCsrfErrorException();
             }
         }
 

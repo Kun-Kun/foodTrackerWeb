@@ -14,10 +14,6 @@ public class AuthorizationUriFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        HttpServletRequest http =  (HttpServletRequest)request;
-        String uri = http.getRequestURI();
-        System.out.println();
-        System.out.println("uri from filter "+uri);
         if (filter==null){
             filter = buildFilter();
         }
@@ -35,17 +31,28 @@ public class AuthorizationUriFilter implements Filter {
     private FilterAction buildFilter(){
         return FilterBuilder
                 .init()
-                .uriMatches("^/s$")
-                .uriMatches("^/$")
-                .and()
-                .isNotAuthenticated()
-                .setMatchAction().forward("/login.jsp")
+                .uriMatches("^/.+\\.jsp$")
+                .uriMatches("^/fragments/.+\\.jsp$")
+                .setMatchAction().sendError(404)
                 .setDefaultAction()
                 .filterBranch(FilterBuilder
-                        .init().uriMatches("^/CheckoutPage.jsp$")
-                        .setMatchAction().sendError(404)
+                        .init()
+                        .uriMatches("^/tracker$")
+                        .uriMatches("^/profile$")
+                        .and()
+                        .isNotAuthenticated()
+                        .setMatchAction().forward("/login.jsp")
                         .setDefaultAction()
-                        .doFilter()
+                        .filterBranch(FilterBuilder
+                                .init()
+                                .isAuthenticated()
+                                .and()
+                                .uriMatches("^/register$")
+                                .setMatchAction()
+                                .sendRedirect("/")
+                                .setDefaultAction()
+                                .doFilter()
+                        )
                 );
 
     }
