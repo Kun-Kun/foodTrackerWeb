@@ -7,6 +7,7 @@ import ua.epam.food.dao.entity.UserEntity;
 import ua.epam.food.dao.repository.ProfileRepository;
 import ua.epam.food.dao.repository.UserRepository;
 import ua.epam.food.exception.InvalidInputException;
+import ua.epam.food.tool.ValidationTools;
 
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
@@ -48,17 +49,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         return profileRepository.findByEmail(email) != null;
     }
 
-    private boolean checkEmailFormat(String email){
-        if (email==null){
-            return false;
-        }
-        return email.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-    }
+
     public boolean registerUser(String username,String email,String password,String confirmPassword) throws InvalidInputException{
         if (usernameExists(username)){
             throw new InvalidInputException("User with username is already exist");
         }
-        if(checkEmailFormat(email)==false){
+        if(ValidationTools.checkEmailFormat(email)==false){
             throw new InvalidInputException("Wrong email format");
         }
         if(emailExists(email)){
@@ -88,8 +84,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         ProfileEntity profileEntity = new ProfileEntity();
         profileEntity.setEmail(email);
         profileEntity.setUserId(userId);
-        profileEntity.setDietId(0);
-        profileEntity.setGoalId(0);
+        profileEntity.setDietId(1);
+        profileEntity.setGoalId(1);
+        profileEntity.setPhysicalLoadLevelId(1);
+        profileEntity.setSexId(1);
+        profileEntity.setHeight(170);
+        profileEntity.setWeight(70F);
         return profileRepository.save(profileEntity);
     }
 

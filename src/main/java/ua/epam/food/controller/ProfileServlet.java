@@ -1,5 +1,9 @@
 package ua.epam.food.controller;
 
+import ua.epam.food.dto.ProfileSelectable;
+import ua.epam.food.services.UserProfileServiceImpl;
+import ua.epam.food.tool.ControllerTools;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +17,8 @@ import java.util.List;
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
 
+    private UserProfileServiceImpl profileService = UserProfileServiceImpl.getInstance();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.doPost(request, response);
@@ -21,8 +27,14 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
-        dispatcher.forward(request, response);
+        if(ControllerTools.isUserAuthenticated()) {
+            Integer profileId = ControllerTools.getProfile().getId();
+            ProfileSelectable profileSelectable = profileService.getProfileByProfileId(profileId);
+            request.setAttribute("profile", profileSelectable);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
+            dispatcher.forward(request, response);
+        }else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 }

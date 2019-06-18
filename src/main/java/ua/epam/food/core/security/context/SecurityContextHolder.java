@@ -22,4 +22,5 @@ public class SecurityContextHolder {
     public void setSecurityData(UserDetail user) {
         this.data.set(user);
     }
+
 }
