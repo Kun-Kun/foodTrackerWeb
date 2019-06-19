@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${empty subHeadline}"><c:set var="subHeadline" value="Login page" scope="request"/></c:if>
 <!DOCTYPE html>
 <html lang="en">
 <c:import url="fragments/head.jsp" />

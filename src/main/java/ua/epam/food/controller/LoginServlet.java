@@ -18,20 +18,15 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-
         // get request parameters for userID and password
         String user = request.getParameter("user");
         String pwd = request.getParameter("pwd");
-        String origin = request.getParameter("origin");
         HttpSession session = request.getSession(true);
         boolean isUserLoggedOn = userAuthenticationService.login(session,user,pwd);
         if(isUserLoggedOn){
-            if(origin!=null&&!origin.isEmpty()) {
-                response.sendRedirect(origin);
-            }else {
-                ControllerTools.sendRedirectInternal(request, response, "/");
-            }
+            ControllerTools.sendRedirectOrigin(request, response, "/");
         }else {
+            ControllerTools.prepareHtmlPage(request,response);
             request.setAttribute("error","Помилка. Неправильний логін або пароль");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
@@ -44,6 +39,7 @@ public class LoginServlet extends HttpServlet {
         if(isUserLoggedOn){
             ControllerTools.sendRedirectInternal(request, response, "/");
         }else {
+            ControllerTools.prepareHtmlPage(request,response);
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
 

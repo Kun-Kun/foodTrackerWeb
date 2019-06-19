@@ -20,8 +20,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-
+        ControllerTools.prepareHtmlPage(request,response);
         String username = ControllerTools.passParameterToAttribute(request,"login");
         String email = ControllerTools.passParameterToAttribute(request,"email");
         String password = request.getParameter("password");
@@ -41,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        ControllerTools.prepareHtmlPage(request,response);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
         dispatcher.forward(request, response);
     }

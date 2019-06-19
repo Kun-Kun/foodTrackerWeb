@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <meta charset="utf-8">
-    <title>Blog Template · Bootstrap</title>
+    <title><c:out value="${headline}" default="Food tracker"/><c:if test="${not empty subHeadline}"><c:out value=" - ${subHeadline}"/></c:if></title>
 
     <link href="<c:url value = "/static/css/bootstrap.min.css"/>" rel="stylesheet"/>
     <link href="<c:url value = "/static/css/style.css"/>" rel="stylesheet"/>

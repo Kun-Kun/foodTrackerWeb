@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${empty subHeadline}"><c:set var="subHeadline" value="Register page"  scope="request"/></c:if>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/head.jsp" />
+<c:import url="fragments/head.jsp" />
 <body>
 <div class="container">
-    <jsp:include page="fragments/navbar.jsp" />
+    <c:import url="fragments/navbar.jsp" />
 
     <div class="row">
         <div class="col-md-12 blog-main">
@@ -52,6 +53,6 @@
         </div>
 
     </div><!-- /.row -->
-    <jsp:include page="fragments/footer.jsp" />
+    <c:import url="fragments/footer.jsp" />
 </div><!-- /.container -->
 </body></html>

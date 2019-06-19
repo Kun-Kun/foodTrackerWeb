@@ -1,7 +1,7 @@
 package ua.epam.food.controller;
 
-import ua.epam.food.dto.ProfileSelectable;
-import ua.epam.food.services.UserProfileService;
+import ua.epam.food.dto.Food;
+import ua.epam.food.services.FoodServiceImpl;
 import ua.epam.food.services.UserProfileServiceImpl;
 import ua.epam.food.tool.ControllerTools;
 
@@ -13,15 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import ua.epam.food.dto.StatusJsonResponse;
-import ua.epam.food.exception.InvalidInputException;
+@WebServlet("/food/edit")
+public class FoodEditServlet extends HttpServlet {
 
-@WebServlet("/profile")
-public class ProfileServlet extends HttpServlet {
+    private FoodServiceImpl foodService = FoodServiceImpl.getInstance();
 
-    private UserProfileService profileService = UserProfileServiceImpl.getInstance();
-
-    @Override
+    /*@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String fieldName = request.getParameter("fieldName");
         String value = request.getParameter("value");
@@ -32,19 +29,17 @@ public class ProfileServlet extends HttpServlet {
         }catch(InvalidInputException iie){
             ControllerTools.returnJSON(response, new StatusJsonResponse("error", iie.getMessage()));
         }
-    }
+    }*/
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(ControllerTools.isUserAuthenticated()) {
-            Integer profileId = ControllerTools.getProfile().getId();
-            ProfileSelectable profileSelectable = profileService.getProfileByProfileId(profileId);
-            request.setAttribute("profile", profileSelectable);
-            ControllerTools.prepareHtmlPage(request,response);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
-            dispatcher.forward(request, response);
-        }else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        ControllerTools.prepareHtmlPage(request,response);
+        String foodId = request.getParameter("food");
+        if(foodId!=null) {
+            Food foodEntity = foodService.loadFoodById(Integer.parseInt(foodId));
+            request.setAttribute("food", foodEntity);
         }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/foodEdit.jsp");
+        dispatcher.forward(request, response);
     }
 }

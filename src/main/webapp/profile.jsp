@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${empty subHeadline}"><c:set var="subHeadline" value="Profile page"  scope="request"/></c:if>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:include page="fragments/head.jsp"/>
+<c:import url="fragments/head.jsp"/>
 <body>
 <div class="container">
-    <jsp:include page="fragments/navbar.jsp"/>
+    <c:import url="fragments/navbar.jsp"/>
     <div class="card">
         <div class="card-header">
             Information about me

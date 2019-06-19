@@ -14,7 +14,7 @@ import ua.epam.food.tool.ValidationTools;
 import java.util.List;
 import java.util.TimeZone;
 
-public class UserProfileServiceImpl {
+public class UserProfileServiceImpl implements UserProfileService{
 
 	private ProfileMapper profileMapper = new ProfileMapperImpl();
 	private ProfileRepository profileRepository = ProfileRepository.getInstance();
@@ -60,7 +60,7 @@ public class UserProfileServiceImpl {
 		return profileMapper.entityToDto(profile, dietEntities, goalEntities, physicalLoadLevelEntities, getSexEntities);
 	}
 
-	public void setDiet(Integer userId, Integer dietId) throws InvalidInputException {
+	private void setDiet(Integer userId, Integer dietId) throws InvalidInputException {
 		ProfileEntity profile = loadOrCreateProfile(userId);
 		if (dietRepository.existsById(dietId)) {
 			profile.setDietId(dietId);
@@ -70,7 +70,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setGoal(Integer userId, Integer goalId) throws InvalidInputException {
+	private void setGoal(Integer userId, Integer goalId) throws InvalidInputException {
 		ProfileEntity profile = loadOrCreateProfile(userId);
 		if (goalRepository.existsById(goalId)) {
 			profile.setGoalId(goalId);
@@ -80,7 +80,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setPhysicalLoadLevel(Integer userId, Integer physicalLoadLevel) throws InvalidInputException {
+	private void setPhysicalLoadLevel(Integer userId, Integer physicalLoadLevel) throws InvalidInputException {
 		ProfileEntity profile = loadOrCreateProfile(userId);
 		if (physicalLoadLevelRepository.existsById(physicalLoadLevel)) {
 			profile.setPhysicalLoadLevelId(physicalLoadLevel);
@@ -90,7 +90,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setSex(Integer userId, Integer sexId) throws InvalidInputException {
+	private void setSex(Integer userId, Integer sexId) throws InvalidInputException {
 		ProfileEntity profile = loadOrCreateProfile(userId);
 		if (sexRepository.existsById(sexId)) {
 			profile.setSexId(sexId);
@@ -100,7 +100,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setFirstName(Integer userId, String firstName) {
+	private void setFirstName(Integer userId, String firstName) {
 		if (firstName != null && firstName.length() < 50) {
 			ProfileEntity profile = loadOrCreateProfile(userId);
 			profile.setFirstName(firstName);
@@ -110,7 +110,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setLastName(Integer userId, String lastName) {
+	private void setLastName(Integer userId, String lastName) {
 		if (lastName != null && lastName.length() < 50) {
 			ProfileEntity profile = loadOrCreateProfile(userId);
 			profile.setLastName(lastName);
@@ -120,7 +120,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setHeight(Integer userId, Integer height) {
+	private void setHeight(Integer userId, Integer height) {
 		if (height != null && height <= 250 && height >= 50) {
 			ProfileEntity profile = loadOrCreateProfile(userId);
 			profile.setHeight(height);
@@ -130,7 +130,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setWeight(Integer userId, Float weight) {
+	private void setWeight(Integer userId, Float weight) {
 		if (weight != null && weight <= 250 && weight >= 20) {
 			ProfileEntity profile = loadOrCreateProfile(userId);
 			profile.setWeight(weight);
@@ -140,7 +140,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setEmail(Integer userId, String email) {
+	private void setEmail(Integer userId, String email) {
 		if (!ValidationTools.checkEmailFormat(email)) {
 			throw new InvalidInputException("Wrong email format");
 		}
@@ -153,7 +153,7 @@ public class UserProfileServiceImpl {
 		}
 	}
 
-	public void setBirthday(Integer userId, String birthDay) {
+	private void setBirthday(Integer userId, String birthDay) {
 		try{
 			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 			df.setTimeZone(TimeZone.getTimeZone("GMT"));

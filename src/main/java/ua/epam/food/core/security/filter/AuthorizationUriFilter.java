@@ -39,6 +39,7 @@ public class AuthorizationUriFilter implements Filter {
                         .init()
                         .uriMatches("^/tracker$")
                         .uriMatches("^/profile$")
+                        .uriMatches("^/food/edit$")
                         .and()
                         .isNotAuthenticated()
                         .setMatchAction().forward("/login.jsp")

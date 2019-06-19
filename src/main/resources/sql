@@ -124,3 +124,19 @@ INSERT INTO `tracker`.`diet` (`id`, `name`, `protein_coefficient`, `fat_coeffici
 INSERT INTO `tracker`.`diet` (`id`, `name`, `protein_coefficient`, `fat_coefficient`, `carbohydrate_coefficient`) VALUES ('2', 'Low carbohydrates', '0.25', '0.45', '0.3');
 INSERT INTO `tracker`.`diet` (`id`, `name`, `protein_coefficient`, `fat_coefficient`, `carbohydrate_coefficient`) VALUES ('3', 'Proteins', '0.4', '0.25', '0.35');
 INSERT INTO `tracker`.`diet` (`id`, `name`, `protein_coefficient`, `fat_coefficient`, `carbohydrate_coefficient`) VALUES ('4', 'Low fats', '0.2', '0.25', '0.55');
+CREATE TABLE `food` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gallery_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` MEDIUMTEXT NOT NULL,
+  `portion_weight` float NOT NULL DEFAULT 0,
+  `fats` float NOT NULL DEFAULT 0,
+  `proteins` float NOT NULL DEFAULT 0,
+  `carbohydrates` float NOT NULL DEFAULT 0,
+  `kilocalories` float NOT NULL DEFAULT 0,
+  `creator_id` int(11) DEFAULT NULL,
+  `default_record` boolean DEFAULT true,
+  `creation_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+INSERT INTO `tracker`.`food` (`id`, `gallery_id`, `title`, `description`, `portion_weight`, `fats`, `proteins`, `carbohydrates`, `kilocalories`) VALUES ('1', '1', 'Борщ украинский', 'Это блюдо известно во всем мире и по праву считается истинной жемчужиной украинской кухни. История возникновения борща – в глубоком прошлом. Известно, что само название блюда походит от старославянского названия свеклы – бърщь. На сегодняшний день существует огромное количество видов данного блюда – во многом рецепт видоизменялся в зависимости от региона страны.', '250', '2.2', '1.1', '6.7', '49');

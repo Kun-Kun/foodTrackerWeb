@@ -16,8 +16,6 @@ public class LogoutServlet extends HttpServlet {
     private UserAuthenticationService userAuthenticationService = UserAuthenticationServiceImpl.getInstance();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        //invalidate the session if exists
         HttpSession session = request.getSession(false);
         userAuthenticationService.logout(session);
         ControllerTools.sendRedirectInternal(request, response, "/");
