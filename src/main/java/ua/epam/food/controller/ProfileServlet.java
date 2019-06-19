@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
+import ua.epam.food.dto.StatusJsonResponse;
+import ua.epam.food.exception.InvalidInputException;
 
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
@@ -21,7 +24,20 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doPost(request, response);
+        String fieldName = request.getParameter("fieldName");
+        String value = request.getParameter("value");
+        boolean isUserLoggedOn = ControllerTools.isUserAuthenticated();
+        if(isUserLoggedOn){
+			try{
+				Integer userId = ControllerTools.getProfile().getUserId();
+				profileService.setValue(userId, fieldName, value);
+				ControllerTools.returnJSON(response, new StatusJsonResponse("ok", "Value succesfully saved"));
+			}catch(InvalidInputException iie){
+				ControllerTools.returnJSON(response, new StatusJsonResponse("error", iie.getMessage()));
+			}
+        }else {
+			ControllerTools.returnJSON(response, new StatusJsonResponse("error", "Unauthorized"));
+        }
     }
 
     @Override

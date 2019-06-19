@@ -11,7 +11,7 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">Вхід до системи</h5>
-                    <form class="form-signin" method="POST" action="/login">
+                    <form class="form-signin" method="POST" action="<c:url value = "/login"/>">
                         <c:if test="${not empty success}">
                             <div class="alert alert-success text-center" role="alert">
                                 <c:out value="${success}"/>

@@ -17,6 +17,7 @@ public class ProfileMapperImpl implements ProfileMapper {
         Profile profile = new Profile();
 
         profile.setId( entity.getId() );
+		profile.setUserId(entity.getUserId());
         profile.setFirstName( entity.getFirstName() );
         profile.setLastName( entity.getLastName() );
         profile.setEmail( entity.getEmail() );
@@ -39,6 +40,7 @@ public class ProfileMapperImpl implements ProfileMapper {
         ProfileSelectable profile = new ProfileSelectable();
 
         profile.setId( entity.getId() );
+		profile.setUserId(entity.getUserId());
         profile.setFirstName( entity.getFirstName() );
         profile.setLastName( entity.getLastName() );
         profile.setEmail( entity.getEmail() );

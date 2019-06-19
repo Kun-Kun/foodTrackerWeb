@@ -3,7 +3,6 @@ package ua.epam.food.dao.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import ua.epam.food.core.db.mapper.JsonDateSerializer;
 
 import java.util.Date;
 
@@ -22,9 +21,7 @@ public class ProfileEntity {
     private Integer height;
     private Float weight;
 
-    //Todo test annotations
-    //@JsonSerialize(using=JsonDateSerializer.class)
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 
 }

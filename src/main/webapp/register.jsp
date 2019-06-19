@@ -12,7 +12,7 @@
             <h3 class="pb-4 mb-4 font-italic border-bottom">
                 Register new user
             </h3>
-            <form action="/register" method="POST">
+            <form action="<c:url value = "/register"/>" method="POST">
                 <div class="form-group row">
                     <label for="inputLogin" class="col-sm-3 col-form-label">Login</label>
                     <div class="col-sm-9">

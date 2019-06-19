@@ -1,5 +1,6 @@
 package ua.epam.food.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.Date;
 @Data
 public class Profile {
     private Integer id;
+	private Integer userId;
     private String firstName;
     private String lastName;
     private Integer sexId;
@@ -16,5 +18,7 @@ public class Profile {
     private Integer physicalLoadLevelId;
     private Integer height;
     private Float weight;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     private Date birthday;
 }

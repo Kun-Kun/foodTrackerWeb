@@ -238,8 +238,10 @@ public class FilterBuilder implements FilterAction {
             setActionField(new FilterAction() {
                 @Override
                 public void execute(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-                    HttpServletResponse http = (HttpServletResponse) response;
-                    http.sendRedirect(url);
+                    HttpServletResponse httpResponse = (HttpServletResponse) response;
+					HttpServletRequest httpRequest = (HttpServletRequest) request;
+					String contextPath = httpRequest.getContextPath();
+                    httpResponse.sendRedirect(contextPath+url);
                 }
             });
             return filterBuilderInstance;
@@ -264,12 +266,12 @@ public class FilterBuilder implements FilterAction {
         private void storeUrlInSession(String parameterName, ServletRequest request){
             HttpServletRequest http = (HttpServletRequest) request;
             HttpSession session = http.getSession(true);
-            session.setAttribute(parameterName, http.getRequestURI().substring(http.getContextPath().length()));
+            session.setAttribute(parameterName, http.getRequestURI());
         }
 
         private void storeUrlInParameter(String parameterName, ServletRequest request){
-            HttpServletRequest http = (HttpServletRequest) request;
-            request.setAttribute(parameterName, http.getRequestURI().substring(http.getContextPath().length()));
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            request.setAttribute(parameterName, httpRequest.getRequestURI());
         }
     }
 

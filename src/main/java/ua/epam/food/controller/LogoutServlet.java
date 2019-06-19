@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import ua.epam.food.tool.ControllerTools;
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
@@ -19,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
         //invalidate the session if exists
         HttpSession session = request.getSession(false);
         userAuthenticationService.logout(session);
-        response.sendRedirect("/");
+        ControllerTools.sendRedirect(request, response, "/");
     }
 
 }

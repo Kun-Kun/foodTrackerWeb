@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import ua.epam.food.tool.ControllerTools;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -28,7 +29,7 @@ public class LoginServlet extends HttpServlet {
             if(origin!=null&&!origin.isEmpty()) {
                 response.sendRedirect(origin);
             }else {
-                response.sendRedirect("/");
+                ControllerTools.sendRedirect(request, response, "/");
             }
         }else {
             request.setAttribute("error","Помилка. Неправильний логін або пароль");
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         boolean isUserLoggedOn = SecurityContextHolder.getInstance().getSecurityData().getUser().isAuthenticated();
         if(isUserLoggedOn){
-            response.sendRedirect("/");
+            ControllerTools.sendRedirect(request, response, "/");
         }else {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
