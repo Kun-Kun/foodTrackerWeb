@@ -8,10 +8,7 @@ package ua.epam.food.core.security.filter.builder;
 import ua.epam.food.core.security.data.Privilege;
 import ua.epam.food.core.security.data.Role;
 import ua.epam.food.core.security.matcher.*;
-import ua.epam.food.core.security.matcher.impl.AuthenticatedSecurityContextMatcher;
-import ua.epam.food.core.security.matcher.impl.PrivilegeSecurityContextMatcher;
-import ua.epam.food.core.security.matcher.impl.RegexRequestMatcher;
-import ua.epam.food.core.security.matcher.impl.RoleSecurityContextMatcher;
+import ua.epam.food.core.security.matcher.impl.*;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -40,6 +37,12 @@ public class FilterBuilder implements FilterAction {
     public SubMatcher uriMatches(String pattern) {
         SubMatcher subMatcher = new SubMatcher(this);
         subMatcher.uriMatches(pattern);
+        return subMatcher;
+    }
+
+    public SubMatcher servletPathMatches(String pattern) {
+        SubMatcher subMatcher = new SubMatcher(this);
+        subMatcher.servletPathMatches(pattern);
         return subMatcher;
     }
 
@@ -119,9 +122,15 @@ public class FilterBuilder implements FilterAction {
         }
 
         public SubMatcher uriMatches(String pattern) {
-            requestMatchers.add(new RegexRequestMatcher(pattern));
+            requestMatchers.add(new RegexRequestURIMatcher(pattern));
             return this;
         }
+
+        public SubMatcher servletPathMatches(String pattern) {
+            requestMatchers.add(new RegexServletPathMatcher(pattern));
+            return this;
+        }
+
         public SubMatcher isAuthenticated() {
             requestMatchers.add(new AuthenticatedSecurityContextMatcher(false));
             return this;

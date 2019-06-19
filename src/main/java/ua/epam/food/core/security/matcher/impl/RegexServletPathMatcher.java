@@ -6,11 +6,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
-public class RegexRequestMatcher implements RequestMatcher {
+public class RegexServletPathMatcher implements RequestMatcher {
 
     private Pattern urlPattern;
 
-    public RegexRequestMatcher(String urlPatternString){
+    public RegexServletPathMatcher(String urlPatternString){
         this.urlPattern = Pattern.compile(urlPatternString,Pattern.CASE_INSENSITIVE);
     }
 
@@ -18,7 +18,7 @@ public class RegexRequestMatcher implements RequestMatcher {
     public boolean matches(ServletRequest request) {
 
         HttpServletRequest http =  (HttpServletRequest)request;
-        String uri = http.getRequestURI().substring(http.getContextPath().length());
+        String uri = http.getServletPath();
         return urlPattern.matcher(uri).matches();
     }
 

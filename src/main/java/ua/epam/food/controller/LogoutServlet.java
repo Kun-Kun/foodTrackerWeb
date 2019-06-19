@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
         //invalidate the session if exists
         HttpSession session = request.getSession(false);
         userAuthenticationService.logout(session);
-        ControllerTools.sendRedirect(request, response, "/");
+        ControllerTools.sendRedirectInternal(request, response, "/");
     }
 
 }

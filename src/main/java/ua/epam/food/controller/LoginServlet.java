@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
             if(origin!=null&&!origin.isEmpty()) {
                 response.sendRedirect(origin);
             }else {
-                ControllerTools.sendRedirect(request, response, "/");
+                ControllerTools.sendRedirectInternal(request, response, "/");
             }
         }else {
             request.setAttribute("error","Помилка. Неправильний логін або пароль");
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         boolean isUserLoggedOn = SecurityContextHolder.getInstance().getSecurityData().getUser().isAuthenticated();
         if(isUserLoggedOn){
-            ControllerTools.sendRedirect(request, response, "/");
+            ControllerTools.sendRedirectInternal(request, response, "/");
         }else {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }

@@ -31,9 +31,19 @@ public class ControllerTools {
     public static Profile getProfile(){
         return (Profile) SecurityContextHolder.getInstance().getSecurityData().getProfile();
     }
-	public static void sendRedirect(HttpServletRequest request,HttpServletResponse response, String path) throws IOException{
+	public static void sendRedirectInternal(HttpServletRequest request, HttpServletResponse response, String path) throws IOException{
 		String contextPath = request.getContextPath();
-		response.sendRedirect(contextPath+path);
+		StringBuilder pathBuilder = new StringBuilder();
+        pathBuilder.append(contextPath).append(path);
+		if(request.isRequestedSessionIdFromURL()) {
+            Integer sessionIdStartPosition = request.getRequestURL().indexOf(";");
+            if (sessionIdStartPosition!=-1) {
+                String seesionId = request.getRequestURL().substring(sessionIdStartPosition);
+                pathBuilder.append(seesionId);
+            }
+        }
+        response.sendRedirect(pathBuilder.toString());
+
 	}
 	public static void returnJSON(HttpServletResponse response, Object object)throws IOException{
 		String json = objectMapper.writeValueAsString(object);
