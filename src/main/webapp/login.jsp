@@ -11,7 +11,7 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Вхід до системи</h5>
+                    <h5 class="card-title text-center">Please sign in</h5>
                     <form class="form-signin" method="POST" action="<c:url value = "/login"/>">
                         <c:if test="${not empty success}">
                             <div class="alert alert-success text-center" role="alert">
@@ -19,13 +19,13 @@
                             </div>
                         </c:if>
                         <div class="form-label-group">
-                            <input type="login" id="inputLogin" class="form-control" placeholder="Логін" required="true" autofocus="true" name="user" />
-                            <label for="inputLogin">Логін</label>
+                            <label for="inputLogin">Login</label>
+                            <input type="login" id="inputLogin" class="form-control" placeholder="Login" required="true" autofocus="true" name="user" />
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="true" name="pwd" />
-                            <label for="inputPassword">Пароль</label>
+                            <label for="inputPassword">Password</label>
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="true" name="pwd" />
                         </div>
                         <c:if test="${not empty error}">
                             <div class="alert alert-danger text-center" role="alert">
@@ -35,7 +35,7 @@
 
                         <input type="hidden" name="${csrf_field_name}" value="${csrf_token}"/>
                         <input type="hidden" name="origin" value="${origin}"/>
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Увійти</button>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
 
                     </form>
                 </div>

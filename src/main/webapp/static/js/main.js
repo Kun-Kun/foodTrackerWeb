@@ -138,37 +138,37 @@ function applyField(endpoint,fieldName,value,successFunction,errorFunction){
     });
 };
 
-var foodList = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('data'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    sufficient: 100,
-    remote: {
-        url: '/food/food/search?query=%QUERY',
-        wildcard: '%QUERY',
-        rateLimitWait:20,
-    }
-});
-
-
-$('#foodSearch-typeahead').typeahead(
-    {
-       // menu: ,
-        hint: true,
-        highlight: true,
-        minLength: 2
-    },{
-        name: 'foodList',
-        display: 'data',
-        limit:100,
-        source: foodList,
-        templates: {
-            suggestion:function(data) {
-                $('#typeahead-target').html(data);
-                return data;
-            }
-        }
-    }
-);
+//var foodList = new Bloodhound({
+//    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('data'),
+//    queryTokenizer: Bloodhound.tokenizers.whitespace,
+//    sufficient: 100,
+//    remote: {
+//        url: '/food/food/search?query=%QUERY',
+//        wildcard: '%QUERY',
+//        rateLimitWait:20,
+//    }
+//});
+//
+//
+//$('#foodSearch-typeahead').typeahead(
+//    {
+//       // menu: ,
+//        hint: true,
+//        highlight: true,
+//        minLength: 2
+//    },{
+//        name: 'foodList',
+//        display: 'data',
+//        limit:100,
+//        source: foodList,
+//        templates: {
+//            suggestion:function(data) {
+//                $('#typeahead-target').html(data);
+//                return data;
+//            }
+//        }
+//    }
+//);
 
 
 $( document ).ready(function() {
