@@ -27,6 +27,7 @@ public class FoodMapperImpl implements FoodMapper {
         food.setCreatorId( entity.getCreatorId() );
         food.setDefaultRecord( entity.getDefaultRecord() );
         food.setCreationDate( entity.getCreationDate() );
+        food.setDeleted(entity.getDeleted());
 
         return food;
     }
@@ -51,6 +52,7 @@ public class FoodMapperImpl implements FoodMapper {
             food.setCreatorId( entity.getCreatorId() );
             food.setDefaultRecord( entity.getDefaultRecord() );
             food.setCreationDate( entity.getCreationDate() );
+            food.setDeleted(entity.getDeleted());
         }
         if ( imageUrls != null ) {
             List<String> list = imageUrls;

@@ -34,7 +34,9 @@ public class AuthorizationUserLoaderFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpSession session = req.getSession(true);
-        String sessionUsername = "admin";//(String)session.getAttribute("username");
+        String sessionUsername =
+        //        "admin";
+        (String)session.getAttribute("username");
         UserDetail userDetail = userDetailService.loadUserByUsername(sessionUsername);
         contextHolder.setSecurityData(userDetail);
         request.setAttribute("userInformation",userDetail);

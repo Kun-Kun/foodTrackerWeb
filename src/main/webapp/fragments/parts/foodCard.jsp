@@ -10,7 +10,7 @@
 
 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
     <div class="col-auto d-none d-lg-block">
-        <img src="<c:url value = "${foodCard.imageUrl}"/>" class="bd-placeholder-img" alt="sans">
+        <img src="<c:url value = "/static/img/1-200.jpg"/>" class="bd-placeholder-img" alt="sans">
     </div>
     <div class="col p-4 d-flex flex-column position-static">
 

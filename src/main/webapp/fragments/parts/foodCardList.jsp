@@ -9,6 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:forEach var="foodCard" items="${foodCards}">
-    <c:set var="foodCard" value="${foodCards}" scope="request"/>
-    <c:import url="foodCard.jsp"/>
+    <c:set var="foodCard" value="${foodCard}" scope="request"/>
+    <c:import url="/fragments/parts/foodCard.jsp"/>
 </c:forEach>

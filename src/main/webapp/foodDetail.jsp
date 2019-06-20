@@ -29,13 +29,27 @@
         </a>
     </div>
     <hr>
-    <div class="d-flex justify-content-around border border-primary rounded">
+    <div class="d-flex justify-content-around align-items-center border border-primary rounded">
         <div class="p-2">Fats: <c:out value="${food.fats}"/> g.</div>
         <div class="p-2">Proteins: <c:out value="${food.proteins}"/> g.</div>
         <div class="p-2">Carbohydrates: <c:out value="${food.carbohydrates}"/> g.</div>
         <div class="p-2">Kilocalories: <c:out value="${food.kilocalories}"/> kcal.</div>
         <div class="p-2">Weight: <c:out value="${food.portionWeight}"/> g.</div>
-        <div class="p-2"><a href="#" class="add-to-tracker" data-id="<c:out value="${food.id}"/>">+</a></div>
+        <c:if test="${userInformation.user.authenticated == true}">
+            <div class="p-2"><a href="#" class="add-to-tracker btn btn-light" data-id="<c:out value="${food.id}"/>">+</a></div>
+
+            <c:if test="${userInformation.profile.userId == food.creatorId}">
+                <div class="p-2"><a class="btn btn-light" href="<c:url value = "/food/edit?food=${food.id}"/>">Edit</a></div>
+                <div class="p-2">
+                    <form method="POST" action="<c:url value = "/food/delete"/>">
+                        <input type="hidden" name="${csrf_field_name}" value="${csrf_token}"/>
+                        <input type="hidden" name="id" value="<c:out value="${food.id}" default="${id}"/>"/>
+                        <button type="submit" class="delete-food btn btn-light" data-id="<c:out value="${food.id}"/>">Delete</button>
+                    </form>
+                </div>
+            </c:if>
+
+        </c:if>
     </div>
     <hr>
     <h2 class="mb-0"><c:out value="${food.title}"/></h2>

@@ -20,6 +20,7 @@ public class Food {
     private Float kilocalories;
     private Integer creatorId;
     private Boolean defaultRecord;
+    private Boolean deleted;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationDate;

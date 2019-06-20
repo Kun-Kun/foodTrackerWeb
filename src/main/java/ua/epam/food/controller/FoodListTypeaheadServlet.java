@@ -1,11 +1,7 @@
 package ua.epam.food.controller;
 
 import ua.epam.food.dto.Food;
-import ua.epam.food.dto.ProfileSelectable;
-import ua.epam.food.dto.StatusJsonResponse;
-import ua.epam.food.exception.InvalidInputException;
 import ua.epam.food.services.FoodServiceImpl;
-import ua.epam.food.services.UserProfileServiceImpl;
 import ua.epam.food.tool.ControllerTools;
 
 import javax.servlet.RequestDispatcher;
@@ -17,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/food")
-public class FoodListServlet extends HttpServlet {
+@WebServlet("/food/search")
+public class FoodListTypeaheadServlet extends HttpServlet {
 
     private FoodServiceImpl foodService = FoodServiceImpl.getInstance();
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String query = request.getParameter("query");
         ControllerTools.prepareHtmlPage(request,response);
-        setFoodCardListSearchResult(request,"");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/foodList.jsp");
+        setFoodCardListSearchResult(request,query);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/fragments/parts/foodCardList.jsp");
         dispatcher.forward(request, response);
     }
 

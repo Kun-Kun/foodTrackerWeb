@@ -136,6 +136,7 @@ CREATE TABLE `food` (
   `kilocalories` float NOT NULL DEFAULT 0,
   `creator_id` int(11) DEFAULT NULL,
   `default_record` boolean DEFAULT true,
+  `deleted` boolean DEFAULT false,
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

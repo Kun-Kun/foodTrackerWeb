@@ -16,6 +16,10 @@
     <script type="text/javascript" src="<c:url value = "/static/js/jquery-3.4.1.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/bootstrap.bundle.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/awesome.js"/>"></script>
+    <script src="<c:url value = "/static/js/typeahead/typeahead.bundle.min.js"/>"></script>
+    <script src="<c:url value = "/static/js/typeahead/bloodhound.min.js"/>"></script>
+    <script src="<c:url value = "/static/js/typeahead/typeahead.jquery.min.js"/>"></script>
+
     <script type="text/javascript" src="<c:url value = "/static/js/main.js"/>"></script>
     <script th:inline="javascript" type="text/javascript">
         var _csrf = "${csrf_token}";

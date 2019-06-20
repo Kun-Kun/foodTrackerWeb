@@ -10,11 +10,13 @@
     <c:import url="fragments/navbar.jsp"/>
     <div class="row pb-3">
         <div class="col-md-10">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id='#foodSearch-typeahead'>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id='foodSearch-typeahead'>
         </div>
-        <div class="col">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add custom</button>
-        </div>
+        <c:if test="${userInformation.user.authenticated == true}">
+            <div class="col">
+                <a href="<c:url value = "/food/edit"/>" class="btn btn-outline-success my-2 my-sm-0">Add custom</a>
+            </div>
+        </c:if>
     </div>
 
     <div id="typeahead-target">
