@@ -18,13 +18,11 @@
                                 <c:out value="${success}"/>
                             </div>
                         </c:if>
-                        <div class="form-label-group">
-                            <label for="inputLogin">Login</label>
+                        <div class="form-label-group pb-2 pt-2">
                             <input type="login" id="inputLogin" class="form-control" placeholder="Login" required="true" autofocus="true" name="user" />
                         </div>
 
-                        <div class="form-label-group">
-                            <label for="inputPassword">Password</label>
+                        <div class="form-label-group pb-2 pt-2">
                             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="true" name="pwd" />
                         </div>
                         <c:if test="${not empty error}">
@@ -35,7 +33,7 @@
 
                         <input type="hidden" name="${csrf_field_name}" value="${csrf_token}"/>
                         <input type="hidden" name="origin" value="${origin}"/>
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase  pb-2 pt-2" type="submit">Sign in</button>
 
                     </form>
                 </div>

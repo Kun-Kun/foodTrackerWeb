@@ -11,7 +11,7 @@
             <form action="<c:url value = "/food"/>" method="GET">
                 <div class="row pb-3">
 
-                    <div class="col-md-10">
+                    <div class="col-md-9">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query" id='foodSearch-typeahead'>
                     </div>
                     <div class="col">

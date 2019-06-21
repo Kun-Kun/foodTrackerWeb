@@ -8,18 +8,22 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.tracker.food.tool.ControllerTools;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
+	
+	Logger log = LogManager.getLogger(LoginServlet.class);
     private UserAuthenticationService userAuthenticationService = UserAuthenticationServiceImpl.getInstance();
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         String user = request.getParameter("user");
         String pwd = request.getParameter("pwd");
+		log.log(Level.INFO, "Trying to login with username {}",user);
         HttpSession session = request.getSession(true);
         boolean isUserLoggedOn = userAuthenticationService.login(session,user,pwd);
         if(isUserLoggedOn){

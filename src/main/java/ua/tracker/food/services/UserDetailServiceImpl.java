@@ -1,5 +1,6 @@
 package ua.tracker.food.services;
 
+import java.util.ArrayList;
 import ua.tracker.food.core.security.data.Privilege;
 import ua.tracker.food.core.security.data.Role;
 import ua.tracker.food.core.security.data.User;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import ua.tracker.food.exception.ApplicationDatabaseException;
 
 public class UserDetailServiceImpl implements UserDetailService {
 
@@ -92,8 +94,12 @@ public class UserDetailServiceImpl implements UserDetailService {
     }
 
     private List<Privilege> getRolePrivilege(String roleName) {
-        List<RoleEntity> roles = Arrays.asList(roleRepository.findByName(roleName));
-        return getUserPrivileges(roles);
+		try{
+			List<RoleEntity> roles = Arrays.asList(roleRepository.findByName(roleName));
+			return getUserPrivileges(roles);
+		}catch (ApplicationDatabaseException ade){
+			return new ArrayList<>();
+		}
     }
 
     private List<Privilege> getUserPrivileges(Collection<RoleEntity> roles) {
