@@ -7,7 +7,10 @@ It helps you achieve and maintain your weight goal. By logging your meals each d
 
 ## How to use app
 
-Weight Loss /Food Tracking System. Customer chooses food (name, count proteins, fats, carbohydrates), which he ate (from the already prepared list) and writes Amount. The client can add his  food (name, count of proteins, fats, carbon,calories ). If the client has exceeded the daily rate, the system will inform him and write down how much Norma was exceeded. Norm take from the parameters Client (age, height, weight, lifestyle, etc.).
+Weight Loss /Food Tracking System.
+Customer chooses food (name, count proteins, fats, carbohydrates), which he ate (from the already prepared list) and writes Amount. The client can add his  food (name, count of proteins, fats, carbon,calories ).
+If the client has exceeded the daily rate, the system will inform him and write down how much Norma was exceeded.
+Norm take from the parameters Client (age, height, weight, lifestyle, etc.).
 
 ## Prerequisite for launch
 
@@ -35,13 +38,15 @@ Deploy artifact
 ### Running in IDE
 
 Intelij idea : You have to add "lombok" plugin to process lombok annotation @Data etc.. Add tomcat server (choose /bin folder) and choose configuration files from project
+
 NetBeans 8 : Add tomcat server and just click run.
+
 
 This will build and start the application listening on port 8080 with path /food/
 
-##Web application features
+## Web application features
 
-###Security
+### Security
 
   * Authentication
   * Authorization
@@ -49,12 +54,12 @@ This will build and start the application listening on port 8080 with path /food
   * CSRF token request protection
   * Filter builder, that allows to build tree-like filtering algorythm (allow to filtrate by matching servlet/uri paths, roles, privileges, authentication their absence in different variations) and apply actions (throw exception, send error code page, send redirect, forward).
 
-###Database
+### Database
 
   * Object-Relational Mapping based on jackson databind .
   * Batch request
   
-###Technologies
+### Technologies
 
   * JSP + JSTL;
   * Servlets;
