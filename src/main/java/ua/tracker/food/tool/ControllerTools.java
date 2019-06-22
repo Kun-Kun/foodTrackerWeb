@@ -85,9 +85,9 @@ public class ControllerTools {
 
 	public static void returnJSON(HttpServletResponse response, Object object)throws IOException{
 		String json = objectMapper.writeValueAsString(object);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
 		out.print(json);
 		out.flush();
 	}

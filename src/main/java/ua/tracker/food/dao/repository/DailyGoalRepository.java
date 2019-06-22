@@ -3,6 +3,9 @@ package ua.tracker.food.dao.repository;
 import ua.tracker.food.core.db.orm.impl.AbstractObjectRelationMapper;
 import ua.tracker.food.dao.entity.DailyGoalEntity;
 import ua.tracker.food.dao.entity.DietEntity;
+import ua.tracker.food.exception.InvalidResultException;
+
+import java.util.Date;
 
 public class DailyGoalRepository extends AbstractObjectRelationMapper<DailyGoalEntity,Integer> {
 
@@ -32,5 +35,7 @@ public class DailyGoalRepository extends AbstractObjectRelationMapper<DailyGoalE
         return "id";
     }
 
-
+    public DailyGoalEntity findOneByEventDateAndUserId(Date eventDate, Integer userId) throws InvalidResultException {
+        return findOneQuery("SELECT * FROM daily_goal WHERE event_date = ? AND user_id = ?",eventDate,userId);
+    }
 }

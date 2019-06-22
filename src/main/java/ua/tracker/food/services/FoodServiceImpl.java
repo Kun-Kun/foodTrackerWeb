@@ -8,6 +8,7 @@ import ua.tracker.food.exception.InvalidInputException;
 import ua.tracker.food.mapper.FoodMapper;
 import ua.tracker.food.mapper.FoodMapperImpl;
 import ua.tracker.food.tool.ControllerTools;
+import ua.tracker.food.tool.DataTransformTools;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -56,7 +57,7 @@ public class FoodServiceImpl {
     }
 
     public Food deleteFood(String id, Integer userId) throws InvalidInputException, AccessDeniedException {
-        Integer idInteger = parseId(id);
+        Integer idInteger = DataTransformTools.parseInteger(id);
         if (idInteger == null || !foodRepository.existsById(idInteger)) {
             throw new InvalidInputException("Food not found");
         }
@@ -76,7 +77,7 @@ public class FoodServiceImpl {
     }
 
     public Food loadFood(String id) throws InvalidInputException {
-        Integer idInteger = parseId(id);
+        Integer idInteger = DataTransformTools.parseInteger(id);
         if (idInteger == null || !foodRepository.existsById(idInteger)) {
             throw new InvalidInputException("Food not found");
         }
@@ -84,7 +85,7 @@ public class FoodServiceImpl {
     }
 
     public Food loadFood(String id, Integer userId) throws InvalidInputException, AccessDeniedException {
-        Integer idInteger = parseId(id);
+        Integer idInteger = DataTransformTools.parseInteger(id);
         if (idInteger == null || !foodRepository.existsById(idInteger)) {
             throw new InvalidInputException("Food not found");
         }
@@ -110,12 +111,12 @@ public class FoodServiceImpl {
     }
 
     public Food saveFood(String id, String title, String description, String fats, String proteins, String carbohydrates, String kilocalories, String weight, Integer userId) throws InvalidInputException, AccessDeniedException {
-        Integer idInteger = parseId(id);
-        Float fatsFloat = parseFloatValue(fats, "fats");
-        Float proteinsFloat = parseFloatValue(proteins, "proteins");
-        Float carbohydratesFloat = parseFloatValue(carbohydrates, "carbohydrates");
-        Float kilocaloriesFloat = parseFloatValue(kilocalories, "kilocalories");
-        Float weightFloat = parseFloatValue(weight, "weight");
+        Integer idInteger = DataTransformTools.parseInteger(id);
+        Float fatsFloat = DataTransformTools.parseFloatValue(fats, "fats");
+        Float proteinsFloat = DataTransformTools.parseFloatValue(proteins, "proteins");
+        Float carbohydratesFloat = DataTransformTools.parseFloatValue(carbohydrates, "carbohydrates");
+        Float kilocaloriesFloat = DataTransformTools.parseFloatValue(kilocalories, "kilocalories");
+        Float weightFloat = DataTransformTools.parseFloatValue(weight, "weight");
         checkFields(title, description, fatsFloat, proteinsFloat, carbohydratesFloat, kilocaloriesFloat, weightFloat);
         FoodEntity foodEntity = null;
         if (idInteger == null || !foodRepository.existsById(idInteger)) {
@@ -140,25 +141,7 @@ public class FoodServiceImpl {
         return foodMapper.entityToDto(savedEntity);
     }
 
-    public Float parseFloatValue(String value, String name) throws InvalidInputException {
-        try {
-            return Float.parseFloat(value);
-        } catch (NumberFormatException nfe) {
-            throw new InvalidInputException("Invalid value " + value + " for " + name);
-        }
-    }
 
-    public Integer parseId(String id) throws InvalidInputException {
-        if (id != null && !id.isEmpty()) {
-            try {
-                return Integer.parseInt(id);
-            } catch (NumberFormatException nfe) {
-                throw new InvalidInputException("Invalid id");
-            }
-        } else {
-            return null;
-        }
-    }
 
     public void checkPermission(FoodEntity entity, Integer userId) throws AccessDeniedException {
         if (!userId.equals(entity.getCreatorId()) || entity.getDeleted()) {

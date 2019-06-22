@@ -1,5 +1,6 @@
 package ua.tracker.food.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import ua.tracker.food.component.RepastType;
 
@@ -17,6 +18,8 @@ public class EatenRecordEntity {
     private Float proteins;
     private Float carbohydrates;
     private Float kilocalories;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date changeDate;
 
 }

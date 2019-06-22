@@ -1,5 +1,6 @@
 
 var editStorageMap = {};
+var trackerTables = {};
 
 function enableEditing(editButton,inputField,applyButton,cancelButton){
         editButton.addClass("d-none");
@@ -96,12 +97,23 @@ function initApplyButtons() {
 
 function initTrackerDatetime() {
     $(function () {
+        var date = moment();
         $('#datetimepicker').datetimepicker({
-            format: 'L',
             viewMode: 'days',
-            sideBySide: true
+            sideBySide: true,
+            format:'DD.MM.YYYY',
+            useCurrent: true,
+            defaultDate: date,
         });
+        $('#datetimepicker').keyup(function() {
+            updateAllTables();
+        });
+        $("#datetimepicker").on("change.datetimepicker", function (e) {
+            updateAllTables();
+        });
+
     });
+
 }
 
     function alertResponse(object,response){
@@ -129,14 +141,35 @@ function initTrackerDatetime() {
         object.html('');
     }
 
-function applyField(endpoint,fieldName,value,successFunction,errorFunction){
+    function applyField(endpoint,fieldName,value,successFunction,errorFunction){
+        $.ajax({
+            type: "POST",
+            url: endpoint,
+            dataType: "json",
+            data: {
+                "fieldName":fieldName,
+                "value":value,
+                "_csrf":_csrf,
+            },
+            success: function(data){
+                successFunction.call(this,data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                errorFunction.call(this,xhr);
+            },
+        });
+    };
+
+function addFood(dateString,foodId,amount,repastTypeId,successFunction,errorFunction){
     $.ajax({
         type: "POST",
-        url: endpoint,
+        url: context_path+"/tracker/eaten",
         dataType: "json",
         data: {
-            "fieldName":fieldName,
-            "value":value,
+            "dateString":dateString,
+            "foodId":foodId,
+            "amount":amount,
+            "repastTypeId":repastTypeId,
             "_csrf":_csrf,
         },
         success: function(data){
@@ -148,44 +181,110 @@ function applyField(endpoint,fieldName,value,successFunction,errorFunction){
     });
 };
 
+function initEatenFood(tableSelector,repast) {
+    trackerTables[repast] = new Tabulator(tableSelector, {
+        height:"150px",
+        layout:"fitColumns",
+        placeholder:"No Data Set",
+        columns:[
+            {title:"Food", field:"title", sorter:"string", width:200},
+            {title:"Weight", field:"portionWeight", sorter:"string"},
+            {title:"Fats", field:"fats", sorter:"string"},
+            {title:"Proteins", field:"proteins", align:"center", width:100},
+            {title:"Carb.", field:"carbohydrates", sorter:"string", sortable:false},
+            {title:"Kcal.", field:"kilocalories",  align:"center"},
+        ],
+    });
+}
+
+function applyData(repast,date) {
+    trackerTables[repast].setData(context_path+"/tracker/eaten?date="+date+"&repast="+repast);
+}
 
 
-//var foodList = new Bloodhound({
-//    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('data'),
-//    queryTokenizer: Bloodhound.tokenizers.whitespace,
-//    sufficient: 100,
-//    remote: {
-//        url: '/food/food/search?query=%QUERY',
-//        wildcard: '%QUERY',
-//        rateLimitWait:20,
-//    }
-//});
-//
-//
-//$('#foodSearch-typeahead').typeahead(
-//    {
-//       // menu: ,
-//        hint: true,
-//        highlight: true,
-//        minLength: 2
-//    },{
-//        name: 'foodList',
-//        display: 'data',
-//        limit:100,
-//        source: foodList,
-//        templates: {
-//            suggestion:function(data) {
-//                $('#typeahead-target').html(data);
-//                return data;
-//            }
-//        }
-//    }
-//);
+function updateTableData(repast) {
+    var date = $("#datetimepicker").data("datetimepicker").date().format('DD.MM.YYYY');
+    if(typeof date == "undefined"){
+        date = moment().format("DD.MM.YYYY");
+    }
+    applyData(repast,date);
+}
+function updateAllTables() {
+    updateTableData(1);
+    updateTableData(2);
+    updateTableData(3);
+    updateTableData(4);
+}
+function initAllTables() {
+    initEatenFood("#breakfast-table",1);
+    initEatenFood("#lunch-table",2);
+    initEatenFood("#dinner-table",3);
+    initEatenFood("#snack-table",4);
+    setTimeout(function (){updateAllTables();}, 500);
+}
 
+function initTrackerControls() {
+
+    $(".eaten-control").each(function () {
+        var repastId = $(this).attr("data-repast");
+        var selectedFoodId;
+        var searchInput = $(this).find(".food-search");
+        var addButton = $(this).find(".food-add");
+        var amountField = $(this).find(".food-amount");
+
+        var foodList = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            sufficient: 100,
+            remote: {
+                url: context_path+'/food/search?query=%QUERY',
+                wildcard: '%QUERY',
+                rateLimitWait:20,
+            }
+        });
+
+        searchInput.typeahead(
+            {
+                hint: true,
+                highlight: true,
+                minLength: 2
+            },{
+                name: 'foodList',
+                display: 'title',
+                limit:10,
+                source: foodList,
+            }
+        );
+
+        searchInput.bind('typeahead:select', function (ev, suggestion) {
+            if (typeof suggestion != 'undefined') {
+                selectedFoodId = suggestion.id;
+                amountField.val(suggestion.portionWeight);
+            }
+        });
+
+        addButton.click(function(){
+            var dateString = $("#datetimepicker").data("datetimepicker").date().format('DD.MM.YYYY');
+            var amount = amountField.val();
+            addFood(dateString,selectedFoodId,amount,repastId,function (data) {
+                updateTableData(repastId);
+                amountField.val("");
+                searchInput.val("");
+            },function () {
+
+            });
+
+        });
+
+    });
+}
 
 $( document ).ready(function() {
+    initTrackerDatetime();
     initEditButtons();
     initCancelButtons();
     initApplyButtons();
+    initAllTables();
+    initTrackerControls();
 });
 

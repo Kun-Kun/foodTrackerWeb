@@ -1,10 +1,15 @@
 package ua.tracker.food.core.db;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.tracker.food.controller.LoginServlet;
+
 import java.sql.*;
 import java.util.List;
 
 public class QueryExecutor{
-
+    private Logger log = LogManager.getLogger(QueryExecutor.class);
     private StatementExecutor statementExecutor = new StatementExecutor();
 
     private PreparedStatement prepareStatement(Connection conn, String sql,int statementType, Object ... parameters ) throws SQLException{
@@ -27,6 +32,7 @@ public class QueryExecutor{
     }
 
     public ResultSet executeSqlQuery(Connection conn, String sql, Object ... parameters ) throws SQLException{
+        log.log(Level.INFO,"Executing query '{}' with parameters {}", sql , parameters);
         PreparedStatement statement = prepareStatement(conn,sql,Statement.NO_GENERATED_KEYS,parameters);
         return statementExecutor.executeStatement(statement);
     }

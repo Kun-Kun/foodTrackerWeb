@@ -10,7 +10,6 @@ public class EatenTrackerRecord {
     private Integer id;
     private Integer foodId;
     private RepastType repastType;
-    private Date eventDate;
     private String imageUrl;
     private String title;
     private String description;

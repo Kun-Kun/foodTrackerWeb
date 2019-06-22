@@ -61,13 +61,15 @@
     </div>
     <div class="card m-3">
         <div class="card-header">
-            <div class="d-flex ">
+            <div class="d-flex  eaten-control" data-repast="1">
                 <div class="p-2 flex-grow-1">Breakfast</div>
-                <div class="p-2">Flex item</div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-search" id="breakfastFoodSearch" placeholder="Search.."></div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-amount" id="breakfastFoodAmount" placeholder="g."></div>
+                <div class="m-0 p-0"><button type="button" class="btn btn-primary food-add" id="breakfastFoodAdd">Add</button></div>
             </div>
         </div>
         <div class="card-body">
-
+            <div id="breakfast-table"></div>
         </div>
         <div class="card-footer text-muted">
             <div class="progress">
@@ -77,13 +79,15 @@
     </div>
     <div class="card m-3">
         <div class="card-header">
-            <div class="d-flex ">
+            <div class="d-flex eaten-control" data-repast="2">
                 <div class="p-2 flex-grow-1">Lunch</div>
-                <div class="p-2">Flex item</div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-search" id="lunchFoodSearch" placeholder="Search.."></div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-amount" id="lunchFoodAmount" placeholder="g."></div>
+                <div class="m-0 p-0"><button type="button" class="btn btn-primary food-add" id="lunchFoodAdd">Add</button></div>
             </div>
         </div>
         <div class="card-body">
-
+            <div id="lunch-table"></div>
         </div>
         <div class="card-footer text-muted">
             <div class="progress">
@@ -93,13 +97,15 @@
     </div>
     <div class="card m-3">
         <div class="card-header">
-            <div class="d-flex ">
+            <div class="d-flex  eaten-control" data-repast="3">
                 <div class="p-2 flex-grow-1">Dinner</div>
-                <div class="p-2">Flex item</div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-search" id="dinnerFoodSearch" placeholder="Search.."></div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-amount" id="dinnerFoodAmount" placeholder="g."></div>
+                <div class="m-0 p-0"><button type="button" class="btn btn-primary food-add" id="dinnerFoodAdd">Add</button></div>
             </div>
         </div>
         <div class="card-body">
-
+            <div id="dinner-table"></div>
         </div>
         <div class="card-footer text-muted">
             <div class="progress">
@@ -109,13 +115,15 @@
     </div>
     <div class="card m-3">
         <div class="card-header">
-            <div class="d-flex ">
+            <div class="d-flex  eaten-control" data-repast="4">
                 <div class="p-2 flex-grow-1">Snack</div>
-                <div class="p-2">Flex item</div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-search" id="snackFoodSearch" placeholder="Search.."></div>
+                <div class="m-0 p-0"><input type="text" class="form-control food-amount" id="snackFoodAmount" placeholder="g."></div>
+                <div class="m-0 p-0"><button type="button" class="btn btn-primary food-add" id="snackFoodAdd">Add</button></div>
             </div>
         </div>
         <div class="card-body">
-
+            <div id="snack-table"></div>
         </div>
         <div class="card-footer text-muted">
             <div class="progress">

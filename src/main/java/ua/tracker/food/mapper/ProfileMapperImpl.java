@@ -1,6 +1,7 @@
 package ua.tracker.food.mapper;
 
 import ua.tracker.food.component.Gender;
+import ua.tracker.food.component.UserParameters;
 import ua.tracker.food.dto.Profile;
 import ua.tracker.food.dto.ProfileSelectable;
 
@@ -9,6 +10,7 @@ import ua.tracker.food.dao.entity.DietEntity;
 import ua.tracker.food.dao.entity.GoalEntity;
 import ua.tracker.food.dao.entity.PhysicalLoadLevelEntity;
 import ua.tracker.food.dao.entity.ProfileEntity;
+import ua.tracker.food.tool.DataTransformTools;
 
 public class ProfileMapperImpl implements ProfileMapper {
 
@@ -60,6 +62,25 @@ public class ProfileMapperImpl implements ProfileMapper {
         profile.setPhysicalLoadLevelList(physicalLoadLevelEntities);
         profile.setGenderList(genders);
         return profile;
+    }
+
+    public UserParameters userParametersFromProfile(ProfileEntity entity){
+        if ( entity == null ) {
+            return null;
+        }
+
+
+
+        UserParameters userParameters = new UserParameters();
+        userParameters.setGender(entity.getGender());
+        if(entity.getBirthday() == null){
+            userParameters.setAge(35);
+        }else {
+            userParameters.setAge(DataTransformTools.calculateAge(entity.getBirthday()));
+        }
+        userParameters.setHeight(entity.getHeight());
+        userParameters.setWeight(entity.getWeight());
+        return userParameters;
     }
 
 }

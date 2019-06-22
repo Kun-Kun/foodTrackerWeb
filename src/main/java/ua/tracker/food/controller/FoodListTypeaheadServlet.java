@@ -22,20 +22,16 @@ public class FoodListTypeaheadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");
-        ControllerTools.prepareHtmlPage(request,response);
-        setFoodCardListSearchResult(request,query);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/fragments/parts/foodList.jsp");
-        dispatcher.forward(request, response);
+        List<Food> foodList = searchFood(query);
+        ControllerTools.returnJSON(response,foodList);
     }
 
-    private  void setFoodCardListSearchResult(HttpServletRequest request,String query){
+    private  List<Food> searchFood(String query){
         if(ControllerTools.isUserAuthenticated()){
             Integer userId = ControllerTools.getProfile().getUserId();
-            List<Food> foodList = foodService.searchFood(query,userId);
-            request.setAttribute("foodCards",foodList);
+            return foodService.searchFood(query,userId);
         }else {
-            List<Food> foodList = foodService.searchFood(query);
-            request.setAttribute("foodCards", foodList);
+            return foodService.searchFood(query);
         }
     }
 }

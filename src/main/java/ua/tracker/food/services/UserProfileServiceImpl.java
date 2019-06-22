@@ -104,6 +104,7 @@ public class UserProfileServiceImpl implements UserProfileService{
 		}
 		profile.setGender(gender);
 		profileRepository.save(profile);
+		profileRepository.save(profile);
 
 	}
 
@@ -162,10 +163,10 @@ public class UserProfileServiceImpl implements UserProfileService{
 
 	private void setBirthday(Integer userId, String birthDay) {
 		try{
-			SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-			df.setTimeZone(TimeZone.getTimeZone("GMT"));
-			Date date = df.parse(birthDay);
-			if(date.after(new Date())||date.before(df.parse("01.01.1930"))){
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+			Date date = simpleDateFormat.parse(birthDay);
+			if(date.after(new Date())||date.before(simpleDateFormat.parse("01.01.1930"))){
 				throw new InvalidInputException("Date out of years range 1930 - current time");
 			}
 			ProfileEntity profile = loadOrCreateProfile(userId);

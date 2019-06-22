@@ -14,6 +14,8 @@
     <link href="<c:url value = "/static/css/bootstrap.min.css"/>" rel="stylesheet"/>
     <link href="<c:url value = "/static/css/tempusdominus-bootstrap-4.min.css"/>" rel="stylesheet"/>
     <link href="<c:url value = "/static/css/style.css"/>" rel="stylesheet"/>
+    <link href="<c:url value = "/static/css/tabulator.min.css"/>" rel="stylesheet" />
+    <link href="<c:url value = "/static/css/typeaheadjs.css"/>" rel="stylesheet" />
     <script type="text/javascript" src="<c:url value = "/static/js/jquery-3.4.1.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/bootstrap.bundle.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/awesome.js"/>"></script>
@@ -22,11 +24,13 @@
     <script type="text/javascript" src="<c:url value = "/static/js/typeahead/typeahead.bundle.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/typeahead/bloodhound.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/typeahead/typeahead.jquery.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value = "/static/js/tabulator.min.js"/>"></script>
 
     <script type="text/javascript" src="<c:url value = "/static/js/main.js"/>"></script>
     <script th:inline="javascript" type="text/javascript">
         var _csrf = "${csrf_token}";
         var _csrf_header = "${csrf_field_name}";
+        var context_path = "<c:url value = "/"/>";
     </script>
 
 </head>

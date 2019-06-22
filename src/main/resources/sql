@@ -55,26 +55,8 @@ CREATE TABLE `profile` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `tracker`.`profile`
-(`id`,
-`user_id`,
-`first_name`,
-`last_name`,
-`email`,
-`goal_id`,
-`height`,
-`weight`,
-`birthday`)
-VALUES
-(1,
-1,
-'Maxim',
-'',
-'mmazurenko@vodafone.ua',
-1,
-null,
-null,
-"1993-05-30");
+INSERT INTO `tracker`.`profile` (`id`, `user_id`, `first_name`, `email`, `gender`, `goal_id`, `diet_id`, `physical_load_level_id`, `height`, `weight`, `birthday`) VALUES ('2', '1', 'Maxim', 'mmazurenko@vodafone.ua', '3', '1', '1', '1', '190', '94', '1993-05-30');
+
 INSERT INTO `tracker`.`role` (`id`, `name`) VALUES ('1', 'GUEST_ROLE');
 CREATE TABLE `diet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -144,7 +126,7 @@ INSERT INTO `tracker`.`food` (`id`, `gallery_id`, `title`, `description`, `porti
 CREATE TABLE `daily_goal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `eventDate` date NOT NULL,
+  `event_date` date NOT NULL,
   `diet_id` int(11) DEFAULT '1' NOT NULL,
   `kilocalories` float DEFAULT 0,
 
@@ -165,3 +147,5 @@ CREATE TABLE `eaten` (
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+INSERT INTO `tracker`.`daily_goal` (`id`, `user_id`, `event_date`, `diet_id`, `kilocalories`) VALUES ('1', '1', '2019.06.22', '1', '2000');
+INSERT INTO `tracker`.`eaten` (`id`, `daily_goal_id`, `food_id`, `repast_type`, `portion_weight`, `fats`, `proteins`, `carbohydrates`, `kilocalories`, `change_date`) VALUES ('1', '1', '1', '1', '200', '50', '33', '200', '300', '2019.06.22');
