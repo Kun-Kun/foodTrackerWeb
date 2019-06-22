@@ -1,5 +1,6 @@
 package ua.tracker.food.services;
 
+import ua.tracker.food.component.Gender;
 import ua.tracker.food.core.security.encoder.PasswordEncoder;
 import ua.tracker.food.core.security.encoder.impl.ShaPasswordEncoder;
 import ua.tracker.food.dao.entity.ProfileEntity;
@@ -87,7 +88,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         profileEntity.setDietId(1);
         profileEntity.setGoalId(1);
         profileEntity.setPhysicalLoadLevelId(1);
-        profileEntity.setSexId(1);
+        profileEntity.setGender(Gender.DEFAULT);
         profileEntity.setHeight(170);
         profileEntity.setWeight(70F);
         return profileRepository.save(profileEntity);

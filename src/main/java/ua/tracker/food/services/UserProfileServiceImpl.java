@@ -2,25 +2,23 @@ package ua.tracker.food.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
+
+import ua.tracker.food.component.Gender;
 import ua.tracker.food.dto.ProfileSelectable;
 import ua.tracker.food.exception.InvalidInputException;
 import ua.tracker.food.mapper.ProfileMapper;
 import ua.tracker.food.mapper.ProfileMapperImpl;
 import ua.tracker.food.tool.ValidationTools;
 
-import java.util.List;
-import java.util.TimeZone;
 import ua.tracker.food.dao.entity.DietEntity;
 import ua.tracker.food.dao.entity.GoalEntity;
 import ua.tracker.food.dao.entity.PhysicalLoadLevelEntity;
 import ua.tracker.food.dao.entity.ProfileEntity;
-import ua.tracker.food.dao.entity.SexEntity;
 import ua.tracker.food.dao.repository.DietRepository;
 import ua.tracker.food.dao.repository.GoalRepository;
 import ua.tracker.food.dao.repository.PhysicalLoadLevelRepository;
 import ua.tracker.food.dao.repository.ProfileRepository;
-import ua.tracker.food.dao.repository.SexRepository;
 
 public class UserProfileServiceImpl implements UserProfileService{
 
@@ -29,7 +27,6 @@ public class UserProfileServiceImpl implements UserProfileService{
 	private DietRepository dietRepository = DietRepository.getInstance();
 	private GoalRepository goalRepository = GoalRepository.getInstance();
 	private PhysicalLoadLevelRepository physicalLoadLevelRepository = PhysicalLoadLevelRepository.getInstance();
-	private SexRepository sexRepository = SexRepository.getInstance();
 
 	private static UserProfileServiceImpl instance;
 
@@ -55,8 +52,8 @@ public class UserProfileServiceImpl implements UserProfileService{
 		return physicalLoadLevelRepository.findAll();
 	}
 
-	private List<SexEntity> getSexList() {
-		return sexRepository.findAll();
+	private List<Gender> getGenderList() {
+		return Arrays.asList(Gender.values());
 	}
 
 	public ProfileSelectable getProfileByProfileId(Integer profileId) {
@@ -64,8 +61,8 @@ public class UserProfileServiceImpl implements UserProfileService{
 		List<DietEntity> dietEntities = getDietList();
 		List<GoalEntity> goalEntities = getGoalList();
 		List<PhysicalLoadLevelEntity> physicalLoadLevelEntities = getGetPhysicalLoadLevelList();
-		List<SexEntity> getSexEntities = getSexList();
-		return profileMapper.entityToDto(profile, dietEntities, goalEntities, physicalLoadLevelEntities, getSexEntities);
+		List<Gender> genderList = getGenderList();
+		return profileMapper.entityToDto(profile, dietEntities, goalEntities, physicalLoadLevelEntities, genderList);
 	}
 
 	private void setDiet(Integer userId, Integer dietId) throws InvalidInputException {
@@ -98,14 +95,16 @@ public class UserProfileServiceImpl implements UserProfileService{
 		}
 	}
 
-	private void setSex(Integer userId, Integer sexId) throws InvalidInputException {
+	private void setGender(Integer userId, Integer genderId) throws InvalidInputException {
 		ProfileEntity profile = loadOrCreateProfile(userId);
-		if (sexRepository.existsById(sexId)) {
-			profile.setSexId(sexId);
-			profileRepository.save(profile);
-		} else {
-			throw new InvalidInputException("Selected sex not found");
+
+		Gender gender = Gender.fromInteger(genderId);
+		if (gender==null){
+			throw new InvalidInputException("Selected gender not found");
 		}
+		profile.setGender(gender);
+		profileRepository.save(profile);
+
 	}
 
 	private void setFirstName(Integer userId, String firstName) {
@@ -203,8 +202,8 @@ public class UserProfileServiceImpl implements UserProfileService{
 			case "goal":
 				setGoal(userId, Integer.parseInt(value));
 				break;
-			case "sex":
-				setSex(userId, Integer.parseInt(value));
+			case "gender":
+				setGender(userId, Integer.parseInt(value));
 				break;
 			case "diet":
 				setDiet(userId, Integer.parseInt(value));
@@ -217,7 +216,7 @@ public class UserProfileServiceImpl implements UserProfileService{
 	private ProfileEntity createDefaultProfile(Integer userId) {
 		ProfileEntity entity = new ProfileEntity();
 		entity.setDietId(1);
-		entity.setSexId(1);
+		entity.setGender(Gender.DEFAULT);
 		entity.setPhysicalLoadLevelId(1);
 		entity.setGoalId(1);
 		entity.setUserId(userId);

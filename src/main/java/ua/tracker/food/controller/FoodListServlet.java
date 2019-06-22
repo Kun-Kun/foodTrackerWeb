@@ -22,13 +22,6 @@ public class FoodListServlet extends HttpServlet {
 
     private FoodServiceImpl foodService = FoodServiceImpl.getInstance();
 
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        ControllerTools.prepareHtmlPage(request,response);
-//        setFoodCardListSearchResult(request,"");
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/foodList.jsp");
-//        dispatcher.forward(request, response);
-//    }
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query");

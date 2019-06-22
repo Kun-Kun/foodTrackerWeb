@@ -3,6 +3,7 @@ package ua.tracker.food.dao.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+import ua.tracker.food.component.Gender;
 
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class ProfileEntity {
     private String firstName;
     private String lastName;
     private String email;
-    private Integer sexId;
+    private Gender gender;
     private Integer goalId;
     private Integer dietId;
     private Integer physicalLoadLevelId;

@@ -238,17 +238,17 @@
             <div class="row no-gutters">
                 <div class="col-md-7">
                     <div class="input-group mb-4">
-                        <label for="editableSex" class="col-sm-4 col-form-label">Sex</label>
-                        <select disabled id="editableSex" class="form-control" name="sex" data-controller="<c:url value = "/profile"/>" aria-describedby="editableSex-buttons">
-                            <c:forEach var="sex" items="${profile.sexList}">
-                                <option value="<c:out value="${sex.id}" />" <c:if test="${sex.id == profile.sexId}"><c:out value="selected"/></c:if> >${sex.name}</option>
+                        <label for="editableGender" class="col-sm-4 col-form-label">Gender</label>
+                        <select disabled id="editableGender" class="form-control" name="gender" data-controller="<c:url value = "/profile"/>" aria-describedby="editableGender-buttons">
+                            <c:forEach var="gender" items="${profile.genderList}">
+                                <option value="<c:out value="${gender.id}" />" <c:if test="${gender == profile.gender}"><c:out value="selected"/></c:if> >${gender.text}</option>
                             </c:forEach>
                         </select>
                                 <div class="invalid-tooltip status-container" style="left: 220px;top: 30px;">
                                 </div>
                                 <div class="valid-tooltip status-container" style="left: 220px;top: 30px;">
                                 </div>
-                        <div class="input-group-append" id="editableSex-buttons">
+                        <div class="input-group-append" id="editableGender-buttons">
                             <button class="btn btn-outline-secondary edit-action" type="button" data-toggle="tooltip" title="Edit">
                                 <i class="fas fa-edit fa-lg" aria-hidden="true"></i>
                             </button>

@@ -94,6 +94,16 @@ function initApplyButtons() {
     });
 }
 
+function initTrackerDatetime() {
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            format: 'L',
+            viewMode: 'days',
+            sideBySide: true
+        });
+    });
+}
+
     function alertResponse(object,response){
         if(typeof response.statusText != 'undefined'){
             object.html('<div class="alert alert-danger" role="alert">'+response.statusText + "\r\n" + response.responseText+'</div>');
@@ -137,6 +147,8 @@ function applyField(endpoint,fieldName,value,successFunction,errorFunction){
         },
     });
 };
+
+
 
 //var foodList = new Bloodhound({
 //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('data'),

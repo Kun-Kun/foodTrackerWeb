@@ -12,13 +12,16 @@
     <title><c:out value="${headline}" default="Food tracker"/><c:if test="${not empty subHeadline}"><c:out value=" - ${subHeadline}"/></c:if></title>
 
     <link href="<c:url value = "/static/css/bootstrap.min.css"/>" rel="stylesheet"/>
+    <link href="<c:url value = "/static/css/tempusdominus-bootstrap-4.min.css"/>" rel="stylesheet"/>
     <link href="<c:url value = "/static/css/style.css"/>" rel="stylesheet"/>
     <script type="text/javascript" src="<c:url value = "/static/js/jquery-3.4.1.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/bootstrap.bundle.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value = "/static/js/awesome.js"/>"></script>
-    <script src="<c:url value = "/static/js/typeahead/typeahead.bundle.min.js"/>"></script>
-    <script src="<c:url value = "/static/js/typeahead/bloodhound.min.js"/>"></script>
-    <script src="<c:url value = "/static/js/typeahead/typeahead.jquery.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value = "/static/js/moment-with-locales.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value = "/static/js/tempusdominus-bootstrap-4.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value = "/static/js/typeahead/typeahead.bundle.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value = "/static/js/typeahead/bloodhound.min.js"/>"></script>
+    <script type="text/javascript" src="<c:url value = "/static/js/typeahead/typeahead.jquery.min.js"/>"></script>
 
     <script type="text/javascript" src="<c:url value = "/static/js/main.js"/>"></script>
     <script th:inline="javascript" type="text/javascript">

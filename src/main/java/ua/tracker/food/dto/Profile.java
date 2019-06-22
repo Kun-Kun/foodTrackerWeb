@@ -2,6 +2,7 @@ package ua.tracker.food.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import ua.tracker.food.component.Gender;
 
 import java.util.Date;
 
@@ -11,7 +12,7 @@ public class Profile {
 	private Integer userId;
     private String firstName;
     private String lastName;
-    private Integer sexId;
+    private Gender gender;
     private String email;
     private Integer goalId;
     private Integer dietId;

@@ -45,7 +45,7 @@ CREATE TABLE `profile` (
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `sex_id` int(11) DEFAULT '1' NOT NULL,
+  `gender` int(11) DEFAULT '1' NOT NULL,
   `goal_id` int(11) DEFAULT '1' NOT NULL,
   `diet_id` int(11) DEFAULT '1' NOT NULL,
   `physical_load_level_id` int(11) DEFAULT '1' NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE `physical_load_level` (
   `coefficient` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-CREATE TABLE `sex` (
+CREATE TABLE `gender` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -109,9 +109,9 @@ CREATE TABLE `sex` (
   `age_coefficient` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `tracker`.`sex` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('1', 'Choose..', '200', '10', '4', '4.5');
-INSERT INTO `tracker`.`sex` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('2', 'Man', '88.36', '13.4', '4.8', '5.7');
-INSERT INTO `tracker`.`sex` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('3', 'Woman', '447.6', '9.2', '3.1', '4.3');
+INSERT INTO `tracker`.`gender` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('1', 'Choose..', '200', '10', '4', '4.5');
+INSERT INTO `tracker`.`gender` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('2', 'Man', '88.36', '13.4', '4.8', '5.7');
+INSERT INTO `tracker`.`gender` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('3', 'Woman', '447.6', '9.2', '3.1', '4.3');
 INSERT INTO `tracker`.`physical_load_level` (`id`, `name`, `coefficient`) VALUES ('2', 'Minimal', '1.2');
 INSERT INTO `tracker`.`physical_load_level` (`id`, `name`, `coefficient`) VALUES ('3', 'Low', '1.375');
 INSERT INTO `tracker`.`physical_load_level` (`id`, `name`, `coefficient`) VALUES ('1', 'Middle', '1.55');
@@ -141,3 +141,27 @@ CREATE TABLE `food` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 INSERT INTO `tracker`.`food` (`id`, `gallery_id`, `title`, `description`, `portion_weight`, `fats`, `proteins`, `carbohydrates`, `kilocalories`) VALUES ('1', '1', 'Борщ украинский', 'Это блюдо известно во всем мире и по праву считается истинной жемчужиной украинской кухни. История возникновения борща – в глубоком прошлом. Известно, что само название блюда походит от старославянского названия свеклы – бърщь. На сегодняшний день существует огромное количество видов данного блюда – во многом рецепт видоизменялся в зависимости от региона страны.', '250', '2.2', '1.1', '6.7', '49');
+CREATE TABLE `daily_goal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `eventDate` date NOT NULL,
+  `diet_id` int(11) DEFAULT '1' NOT NULL,
+  `kilocalories` float DEFAULT 0,
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `eaten` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `daily_goal_id` int(11) NOT NULL,
+  `food_id` int(11) NOT NULL,
+  `repast_type` int(11) NOT NULL,
+  `portion_weight` float NOT NULL DEFAULT 0,
+  `fats` float NOT NULL DEFAULT 0,
+  `proteins` float NOT NULL DEFAULT 0,
+  `carbohydrates` float NOT NULL DEFAULT 0,
+  `kilocalories` float NOT NULL DEFAULT 0,
+  `change_date` date NOT NULL,
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
