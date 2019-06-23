@@ -24,10 +24,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.tracker.food.controller.LoginServlet;
 import ua.tracker.food.exception.ApplicationDatabaseException;
 
 public class UserDetailServiceImpl implements UserDetailService {
-
+	private Logger log = LogManager.getLogger(UserDetailServiceImpl.class);
     private static UserDetailServiceImpl instance = null;
     private UserRepository userRepository = UserRepository.getInstance();
     private RoleRepository roleRepository = RoleRepository.getInstance();
@@ -38,8 +42,6 @@ public class UserDetailServiceImpl implements UserDetailService {
     private UserDetailServiceImpl() {
     }
 
-    ;
-
     public synchronized static UserDetailServiceImpl getInstance() {
         if (instance == null) {
             instance = new UserDetailServiceImpl();
@@ -48,25 +50,27 @@ public class UserDetailServiceImpl implements UserDetailService {
     }
 
 
-    public User loadUserByUserEntity(UserEntity user) {
-
+    private User loadUserByUserEntity(UserEntity user) {
+		log.log(Level.INFO, "Loading user roles and privileges");
         List<RoleEntity> roleEntities = roleRepository.findAllByUserId(user.getId());
         List<Privilege> privileges = getUserPrivileges(roleEntities);
         List<Role> roles = getUserRoles(roleEntities);
         return new SimpleUser(user.getUsername(), user.isEnabled(), roles, privileges, true);
     }
 
-    public Profile loadProfileByUserEntity(UserEntity user) {
+    private Profile loadProfileByUserEntity(UserEntity user) {
+		log.log(Level.INFO, "Loading user profile");
         ProfileEntity entity = profileRepository.findByUserId(user.getId());
         return profileMapper.entityToDto(entity);
     }
 
     @Override
     public UserDetail loadUserByUsername(String username) {
-
+	log.log(Level.INFO, "Loading user by username {}" , username);
         SimpleUserDetail userDetail = new SimpleUserDetail();
 
         if (username == null) {
+			log.log(Level.INFO, "Username is null");
             userDetail.setUser(getGuestUser());
             return userDetail;
         }
@@ -74,6 +78,7 @@ public class UserDetailServiceImpl implements UserDetailService {
         UserEntity user = userRepository.findByUsername(username);
 
         if (user == null) {
+			log.log(Level.INFO, "User with username {} not found" , username);
             userDetail.setUser(getGuestUser());
             return userDetail;
         } else {
@@ -85,6 +90,7 @@ public class UserDetailServiceImpl implements UserDetailService {
     }
 
     private User getGuestUser() {
+		log.log(Level.INFO, "Setting up user roles and privileges as guest");
         String guestRoleName = "GUEST_ROLE";
         return new SimpleUser("Guest",
                 true,
@@ -94,15 +100,19 @@ public class UserDetailServiceImpl implements UserDetailService {
     }
 
     private List<Privilege> getRolePrivilege(String roleName) {
+		log.log(Level.INFO, "Loading user privileges by role name {}",roleName);
 		try{
 			List<RoleEntity> roles = Arrays.asList(roleRepository.findByName(roleName));
+			log.log(Level.INFO, "Loaded user privileges: {}",roles);
 			return getUserPrivileges(roles);
 		}catch (ApplicationDatabaseException ade){
+			log.error("Database error",ade);
 			return new ArrayList<>();
 		}
     }
 
     private List<Privilege> getUserPrivileges(Collection<RoleEntity> roles) {
+		log.log(Level.INFO, "Loading user privileges by roles {}",roles);
         return roles.stream()
                 .map(roleEntity -> privilegeRepository.findAllByRoleId(roleEntity.getId()))
                 .flatMap(List::stream)
@@ -113,6 +123,7 @@ public class UserDetailServiceImpl implements UserDetailService {
     }
 
     private List<Role> getUserRoles(Collection<RoleEntity> roles) {
+		log.log(Level.INFO, "Mapping roles {}",roles);
         return roles.stream()
                 .map(roleEntity -> new SimpleRole(roleEntity.getName()))
                 .collect(Collectors.toList());

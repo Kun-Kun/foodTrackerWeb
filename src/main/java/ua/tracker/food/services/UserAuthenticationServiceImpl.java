@@ -6,9 +6,12 @@ import ua.tracker.food.dao.entity.UserEntity;
 import ua.tracker.food.dao.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UserAuthenticationServiceImpl implements UserAuthenticationService {
-
+	private Logger log = LogManager.getLogger(UserAuthenticationServiceImpl.class);
     private UserRepository userRepository = UserRepository.getInstance();
     private PasswordEncoder hashGenerator = new ShaPasswordEncoder();
 
@@ -25,24 +28,26 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 
     @Override
     public boolean login(HttpSession session, String username, String password) {
+		log.log(Level.INFO, "Trying to login user with username {} ", username);
         String sessionUsername = (String)session.getAttribute("username");
         if (sessionUsername == null){
+			log.log(Level.INFO, "Session not contain authentication information");
             UserEntity userEntity = userRepository.findByUsername(username);
             if(userEntity==null){
-                System.out.println("User not Found");
+				log.log(Level.INFO, "User not Found");
                 return false;
             }else if (!userEntity.isEnabled()){
-                System.out.println("User is disabled");
+                log.log(Level.INFO, "User is disabled");
                 return false;
             }else{
                 boolean isPasswordCorrect = hashGenerator.isHashedTextMatch(password,userEntity.getPassword());
                 if (isPasswordCorrect){
-                    System.out.println("Password is correct");
+					log.log(Level.INFO, "Password is correct");
                     session.setAttribute("username",userEntity.getUsername());
                     session.setMaxInactiveInterval(3600);
                     return true;
                 }else {
-                    System.out.println("Password isn't correct");
+                    log.log(Level.INFO, "Password isn't correct");
                     return false;
                 }
             }
@@ -54,6 +59,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     public void logout(HttpSession session) {
         if(session != null) {
             session.invalidate();
+			log.log(Level.INFO, "Session invalidated");
         }
     }
 }

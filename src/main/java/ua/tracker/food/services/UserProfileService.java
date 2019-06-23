@@ -5,5 +5,5 @@ import ua.tracker.food.exception.InvalidInputException;
 
 public interface UserProfileService {
     void setValue(Integer userId, String fieldName, String value) throws InvalidInputException;
-    ProfileSelectable getProfileByProfileId(Integer profileId);
+    ProfileSelectable getProfileSelectableByProfileId(Integer profileId);
 }

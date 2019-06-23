@@ -64,6 +64,7 @@ public class ProfileMapperImpl implements ProfileMapper {
         return profile;
     }
 
+	@Override
     public UserParameters userParametersFromProfile(ProfileEntity entity){
         if ( entity == null ) {
             return null;
