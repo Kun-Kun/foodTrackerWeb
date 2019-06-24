@@ -30,20 +30,4 @@ public class NutritionNormaCalculatorImpl implements NutritionNormaCalculator{
         return nutritionNorma;
     }
 
-    public static void main(String[] args) {
-        CaloriesNormCalculatorImpl caloriesNormCalculator = new CaloriesNormCalculatorImpl(new HarrisBenedictBasalMetabolicRateCalculator());
-        RepastPortionCalculator repastPortionCalculator = new RepastPortionCalculatorImpl();
-        NutrientPartsCalculator nutrientPartsCalculator = new NutrientPartsCalculatorImpl();
-        NutritionNormaCalculatorImpl nutritionNormaCalculator = new NutritionNormaCalculatorImpl(caloriesNormCalculator,repastPortionCalculator,nutrientPartsCalculator);
-        UserParameters userParameters = new UserParameters();
-        userParameters.setWeight(94);
-        userParameters.setHeight(194);
-        userParameters.setAge(26);
-        userParameters.setGender(Gender.MALE);
-        NutrientProportion nutrientProportion = new NutrientProportion();
-        nutrientProportion.setCarbohydrates(0.5f);
-        nutrientProportion.setFats(0.3f);
-        nutrientProportion.setProteins(0.2f);
-        System.out.println(nutritionNormaCalculator.calculateNorma(userParameters,nutrientProportion,1.2f,1.3f));
-    }
 }

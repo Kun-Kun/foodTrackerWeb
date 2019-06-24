@@ -17,19 +17,19 @@ public class HarrisBenedictBasalMetabolicRateCalculator implements BasalMetaboli
         return 0;
     }
 
-    private float calculationFormula(float baseCoefficient,float weightCoefficient,float heightCoefficient,float ageCoefficient, UserParameters user ){
+    protected float calculationFormula(float baseCoefficient,float weightCoefficient,float heightCoefficient,float ageCoefficient, UserParameters user ){
         return baseCoefficient + ( weightCoefficient * user.getWeight() ) + ( heightCoefficient * user.getHeight() ) - ( ageCoefficient *user.getAge() );
     }
 
-    private float calculateForMale(UserParameters parameters){
+    protected float calculateForMale(UserParameters parameters){
         return calculationFormula(66.5f,13.75f,5.003f,6.755f,parameters);
     }
 
-    private float calculateForFemale(UserParameters parameters){
+    protected float calculateForFemale(UserParameters parameters){
         return calculationFormula(655.1f,9.563f,1.850f,4.676f,parameters);
     }
 
-    private float calculateForDefault(UserParameters parameters){
+    protected float calculateForDefault(UserParameters parameters){
         return calculationFormula(360.5f,11.65f,3.426f,5.715f,parameters);
     }
 }

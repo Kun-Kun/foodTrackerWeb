@@ -83,16 +83,23 @@ public class FoodServiceImpl implements FoodService{
         FoodEntity foodEntity = loadFoodEntityById(id);
         return foodMapper.entityToDto(foodEntity);
     }
+    private Food loadDefaultFoodById(Integer id) throws InvalidInputException, AccessDeniedException {
+        FoodEntity foodEntity = loadFoodEntityById(id);
+        if(foodEntity.getDefaultRecord()==false){
+            throw new AccessDeniedException("You do not have rights to load record");
+        }
+        return foodMapper.entityToDto(foodEntity);
+    }
 
 	@Override
-    public Food loadFood(String id) throws InvalidInputException {
+    public Food loadFood(String id) throws InvalidInputException, AccessDeniedException{
 		log.log(Level.INFO, "Loading food by id {}",id);
         Integer idInteger = DataTransformTools.parseInteger(id);
         if (idInteger == null || !foodRepository.existsById(idInteger)) {
 			log.log(Level.INFO, "Food not found");
             throw new InvalidInputException("Food not found");
         }
-        return loadFoodById(idInteger);
+        return loadDefaultFoodById(idInteger);
     }
 
 	@Override

@@ -81,19 +81,6 @@ CREATE TABLE `physical_load_level` (
   `coefficient` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-CREATE TABLE `gender` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `calorie_base` float NOT NULL,
-  `weight_coefficient` float NOT NULL,
-  `height_coefficient` float NOT NULL,
-  `age_coefficient` float NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `tracker`.`gender` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('1', 'Choose..', '200', '10', '4', '4.5');
-INSERT INTO `tracker`.`gender` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('2', 'Man', '88.36', '13.4', '4.8', '5.7');
-INSERT INTO `tracker`.`gender` (`id`, `name`, `calorie_base`, `weight_coefficient`, `height_coefficient`, `age_coefficient`) VALUES ('3', 'Woman', '447.6', '9.2', '3.1', '4.3');
 INSERT INTO `tracker`.`physical_load_level` (`id`, `name`, `coefficient`) VALUES ('2', 'Minimal', '1.2');
 INSERT INTO `tracker`.`physical_load_level` (`id`, `name`, `coefficient`) VALUES ('3', 'Low', '1.375');
 INSERT INTO `tracker`.`physical_load_level` (`id`, `name`, `coefficient`) VALUES ('1', 'Middle', '1.55');
@@ -122,7 +109,9 @@ CREATE TABLE `food` (
   `creation_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `tracker`.`food` (`id`, `gallery_id`, `title`, `description`, `portion_weight`, `fats`, `proteins`, `carbohydrates`, `kilocalories`) VALUES ('1', '1', 'Борщ украинский', 'Это блюдо известно во всем мире и по праву считается истинной жемчужиной украинской кухни. История возникновения борща – в глубоком прошлом. Известно, что само название блюда походит от старославянского названия свеклы – бърщь. На сегодняшний день существует огромное количество видов данного блюда – во многом рецепт видоизменялся в зависимости от региона страны.', '250', '2.2', '1.1', '6.7', '49');
+
+INSERT INTO `food` VALUES (1,1,'Борщ украинский','Это блюдо известно во всем мире и по праву считается истинной жемчужиной украинской кухни. История возникновения борща – в глубоком прошлом. Известно, что само название блюда походит от старославянского названия свеклы – бърщь. На сегодняшний день существует огромное количество видов данного блюда – во многом рецепт видоизменялся в зависимости от региона страны.',250,2.2,1.1,6.7,49,NULL,1,0,NULL),(2,1,'Gazpacho ','Andalusian gazpacho is a cold soup made of raw, blended vegetables. A classic of Spanish cuisine, it originated in the southern region of Andalusia. Gazpacho is widely eaten in Spain and Portugal, particularly during the hot summers, as it is refreshing and cool.',300,4.5,1.5,4.8,65.1,1,1,0,'2019-06-24 16:41:26'),(3,1,'Pasteis de nata','Паштель де ната (корзиночки с кремом) – самый известный деликатес из Португалии. Это разновидность такого популярного в Европе вида сладостей – тарталетки с запеченным заварным кремом. Лёгкая и воздушная тестяная основа и тающий во рту заварной крем – великолепное лакомство.',250,11.9,5,26.4,232.2,1,1,0,'2019-06-24 16:42:35'),(4,1,'Coca-Cola','Coca-Cola, or Coke, is a carbonated soft drink manufactured by The Coca-Cola Company. Originally intended as a patent medicine, it was invented in the late 19th century by John Stith Pemberton and was bought out by businessman Asa Griggs Candler, whose marketing tactics led Coca-Cola to its dominance of the world soft-drink market throughout the 20th century.',200,0,0,10.4,42,1,1,0,'2019-06-24 16:43:58');
+
 CREATE TABLE `daily_goal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,

@@ -25,6 +25,7 @@ public class FoodEditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ControllerTools.prepareHtmlPage(request,response);
         String id = ControllerTools.passParameterToAttribute(request,"id");
         String title = ControllerTools.passParameterToAttribute(request,"title");
         String description = ControllerTools.passParameterToAttribute(request,"description");
